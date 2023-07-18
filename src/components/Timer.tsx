@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const Timer: React.FC = () => {
+const Timer = ({ isReset }: { isReset: boolean }) => {
 	const [seconds, setSeconds] = useState(60);
-
+	
 	useEffect(() => {
 		if (seconds > 0) {
 			const timer = setInterval(() => {
@@ -12,6 +12,12 @@ const Timer: React.FC = () => {
 			return () => clearInterval(timer);
 		}
 	}, [seconds]);
+
+	useEffect(() => {
+		if(isReset) {
+			setSeconds(60);
+		}
+	}, [isReset])
 
 	const radius = 35;
 	const circumference = 2 * Math.PI * radius;

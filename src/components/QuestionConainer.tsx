@@ -1,3 +1,5 @@
+import { FC } from "react";
+
 type Props = {
 	question: string;
 	incorrectOptions: string[];
@@ -6,7 +8,7 @@ type Props = {
 	onSelectOption: (option: string) => void;
 };
 
-const QuestionConainer: React.FC<Props> = ({
+const QuestionConainer: FC<Props> = ({
 	question,
 	incorrectOptions,
 	correctOption,

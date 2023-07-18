@@ -12,23 +12,36 @@ const StartGame: FC = () => {
 	);
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
 	const [selectedOption, setSelectedOption] = useState<string | null>(null);
+	const [isNextBtnVisible, setIsNextBtnVisible] = useState<boolean>(false);
+	const [isReset, setIsReset] = useState<boolean>(false);
+
+	useEffect(() => {
+		dispatch(getQuestions());
+	}, []);
 
 	const handleSelectOption = (option: string) => {
 		setSelectedOption(option);
 
 		setTimeout(() => {
 			if (option !== questions[currentQuestionIndex].correct_answer) {
-				window.alert("wrong answer");
+				window.alert(
+					`Wrong answer! Your score is ${currentQuestionIndex}`
+				);
+				setCurrentQuestionIndex(0);
+				return;
 			}
-
 			setSelectedOption(null);
-			setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+			setIsNextBtnVisible(true);
+			setIsReset(false);
 		}, 3000);
 	};
-	
-	useEffect(() => {
-		dispatch(getQuestions());
-	}, []);
+
+	const handleNextQuestion = () => {
+		setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+		setIsNextBtnVisible(false);
+		setSelectedOption(null);
+		setIsReset(true);
+	};
 
 	return (
 		<div className="game-page">
@@ -38,7 +51,15 @@ const StartGame: FC = () => {
 					className="w-25 mt-5 mb-3"
 					alt="background-image"
 				/>
-				<Timer />
+				<Timer isReset={isReset} />
+				<button
+					className={`position-absolute top-0 end-0 border-2 rounded m-2 p-2 ${
+						isNextBtnVisible ? "" : "d-none"
+					}`}
+					onClick={() => handleNextQuestion()}
+				>
+					NEXT
+				</button>
 			</div>
 			<QuestionConainer
 				question={questions[currentQuestionIndex].question}
