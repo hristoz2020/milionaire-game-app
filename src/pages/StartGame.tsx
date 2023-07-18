@@ -14,11 +14,11 @@ const StartGame: FC = () => {
 	const isLoading = useAppSelector(
 		(state: RootState) => state.questions.isLoading
 	);
-	const points = useAppSelector((state: RootState) => state.points.points);
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
 	const [selectedOption, setSelectedOption] = useState<string | null>(null);
 	const [isNextBtnVisible, setIsNextBtnVisible] = useState<boolean>(false);
 	const [isReset, setIsReset] = useState<boolean>(false);
+	const [backgroundClassName, setBackgroundClassName] = useState<string>("");
 
 	useEffect(() => {
 		void dispatch(getQuestions());
@@ -29,16 +29,22 @@ const StartGame: FC = () => {
 
 		setTimeout(() => {
 			if (option !== questions[currentQuestionIndex].correct_answer) {
-				window.alert(`Wrong answer! Your score is ${points}`);
-				setCurrentQuestionIndex(0);
+				// window.alert(`Wrong answer! Your score is ${points}`);
+				setBackgroundClassName("bg-danger");
 				dispatch(addPoint());
-				return;
 			}
+
+			if (option === questions[currentQuestionIndex].correct_answer) {
+				setBackgroundClassName("bg-success");
+			} 
+
 			setSelectedOption(null);
 			setIsNextBtnVisible(true);
 			setIsReset(false);
 			dispatch(addPoint());
 		}, 3000);
+
+		
 	};
 
 	const handleNextQuestion = () => {
@@ -46,6 +52,7 @@ const StartGame: FC = () => {
 		setIsNextBtnVisible(false);
 		setSelectedOption(null);
 		setIsReset(true);
+		setBackgroundClassName("");
 	};
 
 	return (
@@ -69,15 +76,10 @@ const StartGame: FC = () => {
 			{isLoading && <h1>Loading.....</h1>}
 			{!isLoading && (
 				<QuestionConainer
-					question={questions[currentQuestionIndex]?.question}
-					incorrectOptions={
-						questions[currentQuestionIndex]?.incorrect_answers
-					}
-					correctOption={
-						questions[currentQuestionIndex]?.correct_answer
-					}
+					currentQuestionIndex={currentQuestionIndex}
 					selectedOption={selectedOption}
 					onSelectOption={handleSelectOption}
+					backgroundClass={backgroundClassName}
 				/>
 			)}
 		</div>
