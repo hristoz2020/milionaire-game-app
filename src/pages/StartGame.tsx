@@ -2,37 +2,42 @@ import { FC, useEffect, useState } from "react";
 import image from "../assets/images/image.webp";
 import QuestionConainer from "../components/QuestionConainer";
 import Timer from "../components/Timer";
+import { addPoint } from "../redux/slices/pointsSlice";
 import { getQuestions } from "../redux/slices/questionSlice";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 
 const StartGame: FC = () => {
 	const dispatch = useAppDispatch();
 	const questions = useAppSelector(
-		(state: RootState) => state.questions.question
+		(state: RootState) => state.questions.questions
 	);
+	const isLoading = useAppSelector(
+		(state: RootState) => state.questions.isLoading
+	);
+	const points = useAppSelector((state: RootState) => state.points.points);
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
 	const [selectedOption, setSelectedOption] = useState<string | null>(null);
 	const [isNextBtnVisible, setIsNextBtnVisible] = useState<boolean>(false);
 	const [isReset, setIsReset] = useState<boolean>(false);
 
 	useEffect(() => {
-		dispatch(getQuestions());
-	}, []);
+		void dispatch(getQuestions());
+	}, [dispatch]);
 
 	const handleSelectOption = (option: string) => {
 		setSelectedOption(option);
 
 		setTimeout(() => {
 			if (option !== questions[currentQuestionIndex].correct_answer) {
-				window.alert(
-					`Wrong answer! Your score is ${currentQuestionIndex}`
-				);
+				window.alert(`Wrong answer! Your score is ${points}`);
 				setCurrentQuestionIndex(0);
+				dispatch(addPoint());
 				return;
 			}
 			setSelectedOption(null);
 			setIsNextBtnVisible(true);
 			setIsReset(false);
+			dispatch(addPoint());
 		}, 3000);
 	};
 
@@ -61,15 +66,20 @@ const StartGame: FC = () => {
 					NEXT
 				</button>
 			</div>
-			<QuestionConainer
-				question={questions[currentQuestionIndex].question}
-				incorrectOptions={
-					questions[currentQuestionIndex].incorrect_answers
-				}
-				correctOption={questions[currentQuestionIndex].correct_answer}
-				selectedOption={selectedOption}
-				onSelectOption={handleSelectOption}
-			/>
+			{isLoading && <h1>Loading.....</h1>}
+			{!isLoading && (
+				<QuestionConainer
+					question={questions[currentQuestionIndex]?.question}
+					incorrectOptions={
+						questions[currentQuestionIndex]?.incorrect_answers
+					}
+					correctOption={
+						questions[currentQuestionIndex]?.correct_answer
+					}
+					selectedOption={selectedOption}
+					onSelectOption={handleSelectOption}
+				/>
+			)}
 		</div>
 	);
 };

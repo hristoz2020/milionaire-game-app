@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
+import { RootState, useAppSelector } from "../redux/store";
+import RewardScale from "./RewardScale";
 
 const Timer = ({ isReset }: { isReset: boolean }) => {
 	const [seconds, setSeconds] = useState(60);
-	
+	const points = useAppSelector((state: RootState) => state.points.points);
+
 	useEffect(() => {
 		if (seconds > 0) {
 			const timer = setInterval(() => {
@@ -14,14 +17,18 @@ const Timer = ({ isReset }: { isReset: boolean }) => {
 	}, [seconds]);
 
 	useEffect(() => {
-		if(isReset) {
+		if (isReset) {
 			setSeconds(60);
 		}
-	}, [isReset])
+	}, [isReset]);
 
 	const radius = 35;
 	const circumference = 2 * Math.PI * radius;
 	const strokeDashoffset = circumference * (1 - seconds / 60);
+
+	if (seconds === 0) {
+		return <RewardScale points={points} />;
+	}
 
 	return (
 		<svg width="100" height="100">

@@ -15,8 +15,8 @@ const QuestionConainer: FC<Props> = ({
 	selectedOption,
 	onSelectOption,
 }) => {
-	const options: string[] = [...incorrectOptions, correctOption];
-
+	const options: string[] = [incorrectOptions, correctOption].flat();
+	
 	return (
 		<div>
 			<p className="d-flex justify-content-center row bg-white p-4">

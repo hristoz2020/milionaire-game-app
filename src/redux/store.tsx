@@ -11,6 +11,7 @@ import {
 	REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import pointsSlice from "./slices/pointsSlice";
 import questionSlice from "./slices/questionSlice";
 
 const persistConfig = {
@@ -19,7 +20,8 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-    questions: questionSlice
+    questions: questionSlice,
+	points: pointsSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
