@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import {
 	persistStore,
 	persistReducer,
@@ -10,7 +11,7 @@ import {
 	REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import testSlice from "./slices/testSlice";
+import questionSlice from "./slices/questionSlice";
 
 const persistConfig = {
 	key: "root",
@@ -18,7 +19,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-    test: testSlice
+    questions: questionSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -41,3 +42,7 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+export type RootState = ReturnType<typeof store.getState>;
+export const useAppDispatch: () => typeof store.dispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
