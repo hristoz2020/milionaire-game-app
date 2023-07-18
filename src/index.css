@@ -7,3 +7,19 @@
     min-height: 100vh;
     background-color: rgb(98, 31, 98);
 }
+
+.blinking-class {
+    animation: blink-animation 1s infinite;
+  }
+  
+  @keyframes blink-animation {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
