@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import image from "../assets/images/image.webp";
+import Loader from "../components/Loader";
 import QuestionConainer from "../components/QuestionConainer";
 import RewardScale from "../components/RewardScale";
 import Timer from "../components/Timer";
@@ -94,7 +95,7 @@ const StartGame: FC = () => {
 					NEXT
 				</button>
 			</div>
-			{isLoading && <h1>Loading.....</h1>}
+			{isLoading && <Loader />}
 			{!isLoading && (
 				<QuestionConainer
 					currentQuestionIndex={currentQuestionIndex}
