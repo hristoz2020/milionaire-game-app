@@ -6,80 +6,87 @@ import RewardScale from "../components/RewardScale";
 import Timer from "../components/Timer";
 import { hideModal, showModal } from "../redux/slices/modalSlice";
 import { addPoint } from "../redux/slices/pointsSlice";
-import { getQuestions } from "../redux/slices/questionSlice";
+import {
+	getQuestions,
+	resetCurrentQuestionIndex,
+	setCurrentQuestionIndex,
+	setIsResetTimer,
+	setIsVisibleNexBtn,
+	setSelectedOption,
+} from "../redux/slices/questionSlice";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 
 const StartGame: FC = () => {
 	const dispatch = useAppDispatch();
-	const questions = useAppSelector(
-		(state: RootState) => state.questions.questions
+	const {questions, isLoading, isVisibleNexBtn, isResetTimer} = useAppSelector(
+		(state: RootState) => state.questions
 	);
-	const isLoading = useAppSelector(
-		(state: RootState) => state.questions.isLoading
+	const isShowModal = useAppSelector(
+		(state: RootState) => state.showModal.isShow
 	);
-	const isShowModal = useAppSelector((state: RootState) => state.showModal.isShow);
 	const points = useAppSelector((state: RootState) => state.points.points);
-	const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
-	const [selectedOption, setSelectedOption] = useState<string | null>(null);
-	const [isNextBtnVisible, setIsNextBtnVisible] = useState<boolean>(false);
-	const [isReset, setIsReset] = useState<boolean>(false);
-	const [backgroundClassName, setBackgroundClassName] = useState<string>("");
-	const [backgroundClassDanger, setBackgroundClassDanger] =
+	const currentQuestionIndex = useAppSelector(
+		(state: RootState) => state.questions.currentQuestionIndex
+	);
+	const [backgroundSuccess, setBackgroundSuccess] = useState<string>("");
+	const [backgroundDanger, setBackgroundDanger] =
 		useState<string>("");
-	const [blinkingClassDanger, setBlinkingClassDanger] = useState<string>("");
+	const [blinkingClass, setBlinkingClass] = useState<string>("");
 
 	useEffect(() => {
 		void dispatch(getQuestions());
-		setSelectedOption(null);
+		dispatch(setSelectedOption(null));
 		dispatch(hideModal());
-		setBackgroundClassName("");
-		setBackgroundClassDanger("");
-		setIsReset(true);
-		setCurrentQuestionIndex(0);
+		setBackgroundSuccess("");
+		setBackgroundDanger("");
+		dispatch(setIsResetTimer(true))
+		dispatch(resetCurrentQuestionIndex());
+		dispatch(setIsVisibleNexBtn(false));
 	}, [dispatch, questions.length === 0]);
 
 	useEffect(() => {
 		if (points === 15) {
 			setTimeout(() => {
-				dispatch(showModal())
-			}, 1000);
+				dispatch(showModal());
+			}, 2000);
 		}
-	}, [points]);
+	}, [points, dispatch]);
 
 	const handleSelectOption = (option: string) => {
-		setSelectedOption(option);
+		dispatch(setSelectedOption(option));
 
 		setTimeout(() => {
 			if (option !== questions[currentQuestionIndex].correct_answer) {
-				setBackgroundClassName("bg-success");
-				setBackgroundClassDanger("bg-danger");
-				setBlinkingClassDanger("");
+				setBackgroundSuccess("bg-success");
+				setBackgroundDanger("bg-danger");
+				setBlinkingClass("");
 				setTimeout(() => {
-					dispatch(showModal())
-				}, 1000);
+					dispatch(showModal());
+				}, 2000);
 			}
 
 			if (option === questions[currentQuestionIndex].correct_answer) {
 				dispatch(addPoint());
-				setBackgroundClassName("bg-success");
-				setBackgroundClassDanger("bg-danger");
-				setBlinkingClassDanger("");
-				setIsNextBtnVisible(true);
-			}
+				setBackgroundSuccess("bg-success");
+				setBackgroundDanger("bg-danger");
+				setBlinkingClass("");
+				dispatch(setIsVisibleNexBtn(true));
 
-			setIsReset(false);
+			}
+			dispatch(setIsResetTimer(false))
+
 		}, 3000);
-		setBlinkingClassDanger("blinking-class");
+		setBlinkingClass("blinking-class");
 	};
 
 	const handleNextQuestion = () => {
-		setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-		setSelectedOption(null);
-		setIsNextBtnVisible(false);
-		setSelectedOption(null);
-		setIsReset(true);
-		setBackgroundClassName("");
-		setBackgroundClassDanger("");
+		dispatch(setCurrentQuestionIndex());
+		dispatch(setSelectedOption(null));
+		dispatch(setIsVisibleNexBtn(false));
+		dispatch(setIsResetTimer(true))
+
+		setBackgroundSuccess("");
+		setBackgroundDanger("");
 	};
 
 	return (
@@ -90,10 +97,10 @@ const StartGame: FC = () => {
 					className="w-25 mt-5 mb-3"
 					alt="background-image"
 				/>
-				<Timer isReset={isReset} />
+				<Timer isReset={isResetTimer} />
 				<button
 					className={`position-absolute top-0 end-0 border-2 rounded m-2 p-2 ${
-						isNextBtnVisible ? "" : "d-none"
+						isVisibleNexBtn ? "" : "d-none"
 					}`}
 					onClick={() => handleNextQuestion()}
 				>
@@ -103,12 +110,10 @@ const StartGame: FC = () => {
 			{isLoading && <Loader />}
 			{!isLoading && (
 				<QuestionConainer
-					currentQuestionIndex={currentQuestionIndex}
-					selectedOption={selectedOption}
 					onSelectOption={handleSelectOption}
-					backgroundClass={backgroundClassName}
-					backgroundClassDanger={backgroundClassDanger}
-					blinkingClassDanger={blinkingClassDanger}
+					backgroundSuccess={backgroundSuccess}
+					backgroundDanger={backgroundDanger}
+					blinkingClass={blinkingClass}
 				/>
 			)}
 			{isShowModal && <RewardScale />}

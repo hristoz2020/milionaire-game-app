@@ -16,7 +16,6 @@ const RewardScale = () => {
 		dispatch(resetQuestions());
 		dispatch(hideModal());
 		navigate("/start-game");
-
 	};
 
 	return (

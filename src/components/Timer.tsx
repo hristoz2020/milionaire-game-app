@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import RewardScale from "./RewardScale";
+import { showModal } from "../redux/slices/modalSlice";
+import { useAppDispatch } from "../redux/store";
 
 const Timer = ({ isReset }: { isReset: boolean }) => {
+	const dispatch = useAppDispatch();
 	const [seconds, setSeconds] = useState(60);
 
 	useEffect(() => {
@@ -22,10 +24,13 @@ const Timer = ({ isReset }: { isReset: boolean }) => {
 
 	const radius = 35;
 	const circumference = 2 * Math.PI * radius;
-	const strokeDashoffset = circumference * (1 - seconds / 60);
+	const strokeDashOffset = circumference * (1 - seconds / 60);
 
 	if (seconds === 0) {
-		return <RewardScale />;
+		setTimeout(() => {
+			dispatch(showModal());
+			setSeconds(60);
+		}, 2000);
 	}
 
 	return (
@@ -38,7 +43,7 @@ const Timer = ({ isReset }: { isReset: boolean }) => {
 				stroke="#000"
 				strokeWidth="4"
 				strokeDasharray={circumference}
-				strokeDashoffset={strokeDashoffset}
+				strokeDashoffset={strokeDashOffset}
 			/>
 			<text x="50" y="58" textAnchor="middle">
 				{seconds}

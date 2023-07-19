@@ -1,34 +1,23 @@
 import { FC } from "react";
 import { RootState, useAppSelector } from "../redux/store";
+import Options from "./Options";
 
-type Props = {
-	currentQuestionIndex: number;
-	selectedOption: string | null;
+type QuestionProps = {
 	onSelectOption: (option: string) => void;
-	backgroundClass: string;
-	backgroundClassDanger: string;
-	blinkingClassDanger: string
+	backgroundSuccess: string;
+	backgroundDanger: string;
+	blinkingClass: string;
 };
 
-const QuestionConainer: FC<Props> = ({
-	currentQuestionIndex,
-	selectedOption,
+const QuestionConainer: FC<QuestionProps> = ({
 	onSelectOption,
-	backgroundClass,
-	backgroundClassDanger,
-	blinkingClassDanger
+	backgroundSuccess,
+	backgroundDanger,
+	blinkingClass,
 }) => {
-	const questions = useAppSelector(
-		(state: RootState) => state.questions.questions
+	const { questions, currentQuestionIndex } = useAppSelector(
+		(state: RootState) => state.questions
 	);
-	const options: string[] = [
-		questions[currentQuestionIndex]?.incorrect_answers,
-		questions[currentQuestionIndex]?.correct_answer,
-	].flat();
-
-	const checkCurrentOption = questions[
-		currentQuestionIndex
-	]?.incorrect_answers.find((el) => el === selectedOption);
 
 	return (
 		<div>
@@ -36,28 +25,12 @@ const QuestionConainer: FC<Props> = ({
 				{questions[currentQuestionIndex]?.question}
 			</p>
 			<div className="row-cols-2 p-1 m-2">
-				{options.map((option, index) => {
-					const checkOptions = selectedOption === option;
-
-					return (
-						<button
-							key={index}
-							type="button"
-							className={`p-3 border-dark rounded ${
-								checkOptions ? blinkingClassDanger : ""
-							} ${
-								option ===
-								questions[currentQuestionIndex]?.correct_answer
-									? backgroundClass
-									: ""
-							} ${(option === checkCurrentOption) && selectedOption ? backgroundClassDanger : ""}
-							`}
-							onClick={() => onSelectOption(option)}
-						>
-							{option}
-						</button>
-					);
-				})}
+				<Options
+					onSelectOption={onSelectOption}
+					blinkingClass={blinkingClass}
+					backgroundDanger={backgroundDanger}
+					backgroundSuccess={backgroundSuccess}
+				/>
 			</div>
 		</div>
 	);
