@@ -19,6 +19,9 @@ const StartGame: FC = () => {
 	const [isNextBtnVisible, setIsNextBtnVisible] = useState<boolean>(false);
 	const [isReset, setIsReset] = useState<boolean>(false);
 	const [backgroundClassName, setBackgroundClassName] = useState<string>("");
+	const [backgroundClassDanger, setBackgroundClassDanger] =
+		useState<string>("");
+	const [blinkingClassDanger, setBlinkingClassDanger] = useState<string>("");
 
 	useEffect(() => {
 		void dispatch(getQuestions());
@@ -30,29 +33,32 @@ const StartGame: FC = () => {
 		setTimeout(() => {
 			if (option !== questions[currentQuestionIndex].correct_answer) {
 				// window.alert(`Wrong answer! Your score is ${points}`);
-				setBackgroundClassName("bg-danger");
-				dispatch(addPoint());
+				setBackgroundClassName("bg-success");
+				setBackgroundClassDanger("bg-danger");
+				setBlinkingClassDanger("");
 			}
 
 			if (option === questions[currentQuestionIndex].correct_answer) {
+				dispatch(addPoint());
 				setBackgroundClassName("bg-success");
-			} 
+				setBackgroundClassDanger("bg-danger");
+				setBlinkingClassDanger("");
+			}
 
-			setSelectedOption(null);
 			setIsNextBtnVisible(true);
 			setIsReset(false);
-			dispatch(addPoint());
 		}, 3000);
-
-		
+		setBlinkingClassDanger("blinking-class");
 	};
 
 	const handleNextQuestion = () => {
 		setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+		setSelectedOption(null);
 		setIsNextBtnVisible(false);
 		setSelectedOption(null);
 		setIsReset(true);
 		setBackgroundClassName("");
+		setBackgroundClassDanger("");
 	};
 
 	return (
@@ -80,6 +86,8 @@ const StartGame: FC = () => {
 					selectedOption={selectedOption}
 					onSelectOption={handleSelectOption}
 					backgroundClass={backgroundClassName}
+					backgroundClassDanger={backgroundClassDanger}
+					blinkingClassDanger={blinkingClassDanger}
 				/>
 			)}
 		</div>
