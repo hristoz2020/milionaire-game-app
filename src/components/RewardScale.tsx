@@ -1,20 +1,70 @@
+import { Link, useNavigate } from "react-router-dom";
 import { rewardsList } from "../constants/rewards";
+import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
+import { resetPoints } from "../redux/slices/pointsSlice";
+import { resetQuestions } from "../redux/slices/questionSlice";
 
-const RewardScale = ({ points }: { points: number }) => {
-	
+const RewardScale = () => {
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+	const points = useAppSelector((state: RootState) => state.points.points);
+
+
+	const handlePlayAgainModal = () => {
+		dispatch(resetPoints());
+		dispatch(resetQuestions());
+		navigate("/start-game");
+	};
 
 	return (
-		<div className="border-3 bg-light">
-			<ul className="border rounded d-flex flex-column justify-content-center align-items-center bg-light mb-1 w-100">
-				{rewardsList.map((reward) => (
-					<li
-						className={`list-unstyled ps-3 pe-3 ${
-							reward.place === points ? "bg-danger" : ""
-						}`}
-						key={reward.id}
-					>{`${reward.place}  ${reward.price}`}</li>
-				))}
-			</ul>
+		<div className="d-flex justify-content-center">
+			<div className="modal fade show d-block" tabIndex={-1}>
+				<div className="modal-dialog">
+					<div className="modal-content">
+						<div className="modal-body d-flex justify-content-center align-items-center flex-column">
+							<div>
+								{points >= 0 && points < 15 && (
+									<h1 className="text-center">
+										End of the game! You submitted a wrong
+										answer or timed out. Your questions
+										answered are {points}!
+									</h1>
+								)}
+								{points === 15 && (
+									<h1 className="text-center">
+										Congratulations, you won 100 000 ! Your
+										questions answered are {points}!
+									</h1>
+								)}
+							</div>
+							<ul className="list-unstyled w-50">
+								{rewardsList.map((reward) => (
+									<li
+										className={`ps-3 pe-3 border rounded-4 ${
+											reward.place === points
+												? "bg-danger rounded-pill"
+												: ""
+										}`}
+										key={reward.id}
+									>
+										{`${reward.place}:  ${reward.price}`}
+									</li>
+								))}
+							</ul>
+						</div>
+						<div className="modal-footer">
+							<Link
+								to={"/start-game"}
+								type="button"
+								className="btn btn-secondary"
+								onClick={handlePlayAgainModal}
+							>
+								Play Again
+							</Link>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 };

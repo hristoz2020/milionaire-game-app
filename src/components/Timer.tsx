@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
-import { RootState, useAppSelector } from "../redux/store";
 import RewardScale from "./RewardScale";
 
 const Timer = ({ isReset }: { isReset: boolean }) => {
 	const [seconds, setSeconds] = useState(60);
-	const points = useAppSelector((state: RootState) => state.points.points);
 
 	useEffect(() => {
 		if (seconds > 0) {
@@ -27,7 +25,7 @@ const Timer = ({ isReset }: { isReset: boolean }) => {
 	const strokeDashoffset = circumference * (1 - seconds / 60);
 
 	if (seconds === 0) {
-		return <RewardScale points={points} />;
+		return <RewardScale />;
 	}
 
 	return (

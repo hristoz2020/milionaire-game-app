@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import image from "../assets/images/image.webp";
 import QuestionConainer from "../components/QuestionConainer";
+import RewardScale from "../components/RewardScale";
 import Timer from "../components/Timer";
 import { addPoint } from "../redux/slices/pointsSlice";
 import { getQuestions } from "../redux/slices/questionSlice";
@@ -14,10 +15,12 @@ const StartGame: FC = () => {
 	const isLoading = useAppSelector(
 		(state: RootState) => state.questions.isLoading
 	);
+	const points = useAppSelector((state: RootState) => state.points.points);
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
 	const [selectedOption, setSelectedOption] = useState<string | null>(null);
 	const [isNextBtnVisible, setIsNextBtnVisible] = useState<boolean>(false);
 	const [isReset, setIsReset] = useState<boolean>(false);
+	const [showModal, setShowModal] = useState<boolean>(false);
 	const [backgroundClassName, setBackgroundClassName] = useState<string>("");
 	const [backgroundClassDanger, setBackgroundClassDanger] =
 		useState<string>("");
@@ -25,17 +28,29 @@ const StartGame: FC = () => {
 
 	useEffect(() => {
 		void dispatch(getQuestions());
-	}, [dispatch]);
+		setSelectedOption(null);
+		setShowModal(false);
+		setBackgroundClassName("");
+		setBackgroundClassDanger("");
+		setIsReset(true);
+		setCurrentQuestionIndex(0);
+	}, [dispatch, questions.length === 0]);
+
+	useEffect(() => {
+		if (points === 15) {
+			setShowModal(true);
+		}
+	}, [points]);
 
 	const handleSelectOption = (option: string) => {
 		setSelectedOption(option);
 
 		setTimeout(() => {
 			if (option !== questions[currentQuestionIndex].correct_answer) {
-				// window.alert(`Wrong answer! Your score is ${points}`);
 				setBackgroundClassName("bg-success");
 				setBackgroundClassDanger("bg-danger");
 				setBlinkingClassDanger("");
+				setShowModal(true);
 			}
 
 			if (option === questions[currentQuestionIndex].correct_answer) {
@@ -43,9 +58,9 @@ const StartGame: FC = () => {
 				setBackgroundClassName("bg-success");
 				setBackgroundClassDanger("bg-danger");
 				setBlinkingClassDanger("");
+				setIsNextBtnVisible(true);
 			}
 
-			setIsNextBtnVisible(true);
 			setIsReset(false);
 		}, 3000);
 		setBlinkingClassDanger("blinking-class");
@@ -90,6 +105,7 @@ const StartGame: FC = () => {
 					blinkingClassDanger={blinkingClassDanger}
 				/>
 			)}
+			{showModal && <RewardScale />}
 		</div>
 	);
 };
