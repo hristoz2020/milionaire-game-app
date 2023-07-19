@@ -3,6 +3,7 @@ import { rewardsList } from "../constants/rewards";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { resetPoints } from "../redux/slices/pointsSlice";
 import { resetQuestions } from "../redux/slices/questionSlice";
+import { hideModal } from "../redux/slices/modalSlice";
 
 const RewardScale = () => {
 	const dispatch = useAppDispatch();
@@ -13,7 +14,9 @@ const RewardScale = () => {
 	const handlePlayAgainModal = () => {
 		dispatch(resetPoints());
 		dispatch(resetQuestions());
+		dispatch(hideModal());
 		navigate("/start-game");
+
 	};
 
 	return (

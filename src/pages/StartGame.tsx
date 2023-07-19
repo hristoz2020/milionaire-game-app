@@ -4,6 +4,7 @@ import Loader from "../components/Loader";
 import QuestionConainer from "../components/QuestionConainer";
 import RewardScale from "../components/RewardScale";
 import Timer from "../components/Timer";
+import { hideModal, showModal } from "../redux/slices/modalSlice";
 import { addPoint } from "../redux/slices/pointsSlice";
 import { getQuestions } from "../redux/slices/questionSlice";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
@@ -16,12 +17,12 @@ const StartGame: FC = () => {
 	const isLoading = useAppSelector(
 		(state: RootState) => state.questions.isLoading
 	);
+	const isShowModal = useAppSelector((state: RootState) => state.showModal.isShow);
 	const points = useAppSelector((state: RootState) => state.points.points);
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
 	const [selectedOption, setSelectedOption] = useState<string | null>(null);
 	const [isNextBtnVisible, setIsNextBtnVisible] = useState<boolean>(false);
 	const [isReset, setIsReset] = useState<boolean>(false);
-	const [showModal, setShowModal] = useState<boolean>(false);
 	const [backgroundClassName, setBackgroundClassName] = useState<string>("");
 	const [backgroundClassDanger, setBackgroundClassDanger] =
 		useState<string>("");
@@ -30,7 +31,7 @@ const StartGame: FC = () => {
 	useEffect(() => {
 		void dispatch(getQuestions());
 		setSelectedOption(null);
-		setShowModal(false);
+		dispatch(hideModal());
 		setBackgroundClassName("");
 		setBackgroundClassDanger("");
 		setIsReset(true);
@@ -39,7 +40,9 @@ const StartGame: FC = () => {
 
 	useEffect(() => {
 		if (points === 15) {
-			setShowModal(true);
+			setTimeout(() => {
+				dispatch(showModal())
+			}, 1000);
 		}
 	}, [points]);
 
@@ -51,7 +54,9 @@ const StartGame: FC = () => {
 				setBackgroundClassName("bg-success");
 				setBackgroundClassDanger("bg-danger");
 				setBlinkingClassDanger("");
-				setShowModal(true);
+				setTimeout(() => {
+					dispatch(showModal())
+				}, 1000);
 			}
 
 			if (option === questions[currentQuestionIndex].correct_answer) {
@@ -106,7 +111,7 @@ const StartGame: FC = () => {
 					blinkingClassDanger={blinkingClassDanger}
 				/>
 			)}
-			{showModal && <RewardScale />}
+			{isShowModal && <RewardScale />}
 		</div>
 	);
 };

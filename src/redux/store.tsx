@@ -11,6 +11,7 @@ import {
 	REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import modalSlice from "./slices/modalSlice";
 import pointsSlice from "./slices/pointsSlice";
 import questionSlice from "./slices/questionSlice";
 
@@ -22,6 +23,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
     questions: questionSlice,
 	points: pointsSlice,
+	showModal: modalSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
