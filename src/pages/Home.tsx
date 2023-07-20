@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import image from "../assets/images/image.webp";
-import { playGameSound } from "../constants/soundsCommands";
+import { playGameSound } from "../helpers/soundsCommands";
 
 const Home: FC = () => {
 	return (

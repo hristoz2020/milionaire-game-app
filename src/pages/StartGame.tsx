@@ -19,7 +19,7 @@ import {
 	playWrongAnswerSound,
 	stopGameSound,
 	stopWrongAnswerSound,
-} from "../constants/soundsCommands";
+} from "../helpers/soundsCommands";
 
 const StartGame: FC = () => {
 	const dispatch = useAppDispatch();
@@ -111,9 +111,7 @@ const StartGame: FC = () => {
 				/>
 				<Timer isReset={isResetTimer} />
 				<button
-					className={`position-absolute top-0 end-0 border-2 rounded m-2 p-2 ${
-						isVisibleNexBtn ? "" : "d-none"
-					}`}
+					className={`btn btn-dark rounded-5 p-1 text-decoration-none col-3 ${isVisibleNexBtn ? "" : "d-none"}`}
 					onClick={() => handleNextQuestion()}
 				>
 					NEXT

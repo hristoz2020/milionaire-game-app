@@ -4,7 +4,7 @@ import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { resetPoints } from "../redux/slices/pointsSlice";
 import { resetQuestions, setIsResetTimer } from "../redux/slices/questionSlice";
 import { showModal } from "../redux/slices/modalSlice";
-import { playGameSound } from "../constants/soundsCommands";
+import { playGameSound } from "../helpers/soundsCommands";
 
 const RewardScale = () => {
 	const dispatch = useAppDispatch();
@@ -26,16 +26,16 @@ const RewardScale = () => {
 				<div className="d-flex justify-content-center align-items-center flex-column">
 					<div className="mt-4">
 						{points >= 0 && points < 15 && (
-							<h1 className="text-center text-light">
+							<h3 className="text-center text-light">
 								End of the game! You submitted a wrong answer or
 								timed out. Your questions answered are {points}!
-							</h1>
+							</h3>
 						)}
 						{points === 15 && (
-							<h1 className="text-center text-light">
+							<h3 className="text-center text-light">
 								Congratulations, you won 100 000 ! Your
 								questions answered are {points}!
-							</h1>
+							</h3>
 						)}
 					</div>
 					<ul className="list-unstyled rounded-3 bg-secondary p-4 px-5 mt-5">
@@ -57,7 +57,7 @@ const RewardScale = () => {
 					<Link
 						to={"/start-game"}
 						type="button"
-						className="btn btn-secondary"
+						className="btn btn-dark rounded-5 p-2 text-decoration-none col-3"
 						onClick={handlePlayAgainModal}
 					>
 						Play Again
