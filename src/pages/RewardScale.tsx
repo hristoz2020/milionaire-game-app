@@ -11,7 +11,7 @@ const RewardScale = () => {
 	const navigate = useNavigate();
 	const points = useAppSelector((state: RootState) => state.points.points);
 
-	const handlePlayAgainModal = () => {
+	const handlePlayAgain = () => {
 		dispatch(resetPoints());
 		dispatch(resetQuestions());
 		dispatch(showModal(false));
@@ -33,8 +33,8 @@ const RewardScale = () => {
 						)}
 						{points === 15 && (
 							<h3 className="text-center text-light">
-								Congratulations, you won 100 000 ! Your
-								questions answered are {points}!
+								Congratulations, you won 100 000 ! You are
+								answered {points} questions correctly!
 							</h3>
 						)}
 					</div>
@@ -58,7 +58,7 @@ const RewardScale = () => {
 						to={"/start-game"}
 						type="button"
 						className="btn btn-dark rounded-5 p-2 text-decoration-none col-3"
-						onClick={handlePlayAgainModal}
+						onClick={handlePlayAgain}
 					>
 						Play Again
 					</Link>

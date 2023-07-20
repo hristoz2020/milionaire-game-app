@@ -14,9 +14,8 @@ const Options: FC<OptionProps> = ({
 	backgroundSuccess,
 	backgroundDanger,
 }) => {
-	const { questions, currentQuestionIndex, selectedOption } = useAppSelector(
-		(state: RootState) => state.questions
-	);
+	const { questions, currentQuestionIndex, selectedOption, isVisibleNexBtn } =
+		useAppSelector((state: RootState) => state.questions);
 	const options: string[] = [
 		questions[currentQuestionIndex]?.incorrect_answers,
 		questions[currentQuestionIndex]?.correct_answer,
@@ -34,7 +33,6 @@ const Options: FC<OptionProps> = ({
 				return (
 					<button
 						key={index}
-						type="button"
 						className={`border-dark rounded-3 col-md-6 col-sm-12 col-12 p-3 mt-1 ${
 							checkOptions ? blinkingClass : ""
 						} ${
@@ -46,8 +44,9 @@ const Options: FC<OptionProps> = ({
 							option === checkCurrentOption && selectedOption
 								? backgroundDanger
 								: ""
-						}
+						} 
                     `}
+						disabled={isVisibleNexBtn}
 						onClick={() => onSelectOption(option)}
 					>
 						{option}

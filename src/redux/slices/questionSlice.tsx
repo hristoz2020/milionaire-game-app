@@ -27,7 +27,7 @@ export const getQuestions = createAsyncThunk("questions/get", async () => {
 		method: "GET",
 	});
 
-	const data = await response.json();
+	const data: Response_code = await response.json();
 
 	return data.results;
 });

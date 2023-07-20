@@ -101,6 +101,11 @@ const StartGame: FC = () => {
 		setBackgroundDanger("");
 	};
 
+	const handleStopSounds = () => {
+		stopGameSound();
+		stopWrongAnswerSound();
+	}
+
 	return (
 		<div className="game-page">
 			<div className="d-flex flex-column align-items-center justify-content-center mb-1">
@@ -112,7 +117,7 @@ const StartGame: FC = () => {
 				<Timer isReset={isResetTimer} />
 				<button
 					className={`position-absolute top-0 end-0 btn border-2 rounded m-2 p-2`}
-					onClick={() => stopGameSound()}
+					onClick={() => handleStopSounds()}
 				>
 					<i className="fa-solid fa-volume-xmark"></i>
 				</button>
