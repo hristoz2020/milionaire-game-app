@@ -9,7 +9,7 @@ const Home: FC = () => {
 				<img src={image} className="w-25 mt-5 mb-3" alt="background-image" />
 				<Link
 					to="/start-game"
-					className="rounded-5 p-3 text-white text-center bg-dark mt-4 text-decoration-none col-3"
+					className="btn btn-dark rounded-5 p-3 mt-4 text-decoration-none col-3"
 				>
 					Start Game
 				</Link>

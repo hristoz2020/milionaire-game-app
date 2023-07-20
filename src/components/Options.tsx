@@ -22,13 +22,12 @@ const Options: FC<OptionProps> = ({
 		questions[currentQuestionIndex]?.correct_answer,
 	].flat();
 
-    const checkCurrentOption = questions[
+	const checkCurrentOption = questions[
 		currentQuestionIndex
-	]?.incorrect_answers.find((el) => el === selectedOption);
-
+	]?.incorrect_answers.find((answer) => answer === selectedOption);
 
 	return (
-		<>
+		<div className="d-flex flex-wrap">
 			{options.map((option, index) => {
 				const checkOptions = selectedOption === option;
 
@@ -36,7 +35,7 @@ const Options: FC<OptionProps> = ({
 					<button
 						key={index}
 						type="button"
-						className={`p-3 border-dark rounded ${
+						className={`border-dark rounded-3 col-md-6 col-sm-12 col-12 p-3 mt-1 ${
 							checkOptions ? blinkingClass : ""
 						} ${
 							option ===
@@ -55,7 +54,7 @@ const Options: FC<OptionProps> = ({
 					</button>
 				);
 			})}
-		</>
+		</div>
 	);
 };
 

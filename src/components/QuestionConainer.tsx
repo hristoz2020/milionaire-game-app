@@ -20,18 +20,16 @@ const QuestionConainer: FC<QuestionProps> = ({
 	);
 
 	return (
-		<div>
-			<p className="d-flex justify-content-center row bg-white p-4">
+		<div className="col-10 m-auto">
+			<p className="d-flex justify-content-center bg-white rounded-3 p-3">
 				{questions[currentQuestionIndex]?.question}
 			</p>
-			<div className="row-cols-2 p-1 m-2">
-				<Options
-					onSelectOption={onSelectOption}
-					blinkingClass={blinkingClass}
-					backgroundDanger={backgroundDanger}
-					backgroundSuccess={backgroundSuccess}
-				/>
-			</div>
+			<Options
+				onSelectOption={onSelectOption}
+				blinkingClass={blinkingClass}
+				backgroundDanger={backgroundDanger}
+				backgroundSuccess={backgroundSuccess}
+			/>
 		</div>
 	);
 };
