@@ -21,7 +21,7 @@ const QuestionConainer: FC<QuestionProps> = ({
 
 	return (
 		<div className="col-10 m-auto">
-			<p className="d-flex justify-content-center bg-white rounded-3 p-3">
+			<p className="d-flex justify-content-center bg-white text-center rounded-3 p-3">
 				{questions[currentQuestionIndex]?.question}
 			</p>
 			<Options

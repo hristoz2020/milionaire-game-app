@@ -39,12 +39,12 @@ const Timer = ({ isReset }: { isReset: boolean }) => {
 				cy="50"
 				r={radius}
 				fill="transparent"
-				stroke="#000"
+				stroke="white"
 				strokeWidth="4"
 				strokeDasharray={circumference}
 				strokeDashoffset={strokeDashOffset}
 			/>
-			<text x="50" y="58" textAnchor="middle">
+			<text x="50" y="58" textAnchor="middle" stroke="white">
 				{seconds}
 			</text>
 		</svg>

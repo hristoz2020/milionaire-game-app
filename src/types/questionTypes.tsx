@@ -10,4 +10,4 @@ export type Question = {
 export type Response_code = {
 	status: number;
 	results: Question[];
-};
+}

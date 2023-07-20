@@ -33,7 +33,7 @@ const StartGame: FC = () => {
 	const [backgroundSuccess, setBackgroundSuccess] = useState<string>("");
 	const [backgroundDanger, setBackgroundDanger] = useState<string>("");
 	const [blinkingClass, setBlinkingClass] = useState<string>("");
-
+		
 	useEffect(() => {
 		void dispatch(getQuestions());
 		dispatch(setSelectedOption(null));
@@ -47,6 +47,7 @@ const StartGame: FC = () => {
 
 	useEffect(() => {
 		if (points === 15) {
+			dispatch(setIsVisibleNexBtn(false));
 			setTimeout(() => {
 				dispatch(showModal(true));
 			}, 2000);

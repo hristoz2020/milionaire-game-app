@@ -3,6 +3,7 @@ import { Question, Response_code } from "../../types/questionTypes";
 import { BASE_URL } from "../../service/config";
 
 interface QuestionState {
+	responseQuestions: Response_code;
 	questions: Question[];
 	isLoading: boolean;
 	currentQuestionIndex: number;
@@ -12,6 +13,7 @@ interface QuestionState {
 }
 
 const initialState: QuestionState = {
+	responseQuestions: { status: 0, results: [] },
 	questions: [],
 	isLoading: false,
 	currentQuestionIndex: 0,
@@ -24,10 +26,10 @@ export const getQuestions = createAsyncThunk("questions/get", async () => {
 	const response = await fetch(BASE_URL, {
 		method: "GET",
 	});
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const data: Response_code = await response.json();
-	const questions: Question[] = data.results;
-	return questions;
+
+	const data = await response.json();
+
+	return data.results;
 });
 
 const questionSlice = createSlice({

@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import RewardScale from "./components/RewardScale";
+import RewardScale from "./pages/RewardScale";
 import Home from "./pages/Home";
 import StartGame from "./pages/StartGame";
 
