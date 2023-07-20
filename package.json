@@ -3,7 +3,7 @@
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
-	"homepage": "https://hristoz2020.github.io/milionaire-game-app",
+	"homepage": "https://hristoz2020.github.io/milionaire-game-app/",
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
