@@ -16,6 +16,7 @@ import Loader from "../components/Loader";
 import Timer from "../components/Timer";
 import image from "../assets/images/image.webp";
 import {
+	playGameSound,
 	playWrongAnswerSound,
 	stopGameSound,
 	stopWrongAnswerSound,
@@ -38,6 +39,7 @@ const StartGame: FC = () => {
 	const [backgroundSuccess, setBackgroundSuccess] = useState<string>("");
 	const [backgroundDanger, setBackgroundDanger] = useState<string>("");
 	const [blinkingClass, setBlinkingClass] = useState<string>("");
+	const [isVolumeActive, setIsVolumeActive] = useState<boolean>(false);
 
 	useEffect(() => {
 		void dispatch(getQuestions());
@@ -101,10 +103,19 @@ const StartGame: FC = () => {
 		setBackgroundDanger("");
 	};
 
-	const handleStopSounds = () => {
-		stopGameSound();
-		stopWrongAnswerSound();
-	}
+	const handleSound = () => {
+		if (isVolumeActive) {
+			playGameSound();
+			setIsVolumeActive(false);
+		} else {
+			stopGameSound();
+			setIsVolumeActive(true);
+		}
+	};
+
+	const handleSoundIcon = isVolumeActive
+		? "fa-volume-high"
+		: "fa-volume-xmark";
 
 	return (
 		<div className="game-page">
@@ -116,10 +127,10 @@ const StartGame: FC = () => {
 				/>
 				<Timer isReset={isResetTimer} />
 				<button
-					className={`position-absolute top-0 end-0 btn border-2 rounded m-2 p-2`}
-					onClick={() => handleStopSounds()}
+					className={`position-absolute top-0 end-0 btn btn-light border-2 rounded m-2 p-2`}
+					onClick={() => handleSound()}
 				>
-					<i className="fa-solid fa-volume-xmark"></i>
+					<i className={`fa-solid ${handleSoundIcon}`}></i>
 				</button>
 				<button
 					className={`btn btn-dark rounded-5 p-1 text-decoration-none col-3 ${
