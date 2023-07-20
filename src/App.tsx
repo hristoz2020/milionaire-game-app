@@ -7,7 +7,7 @@ function App() {
 	return (
 		<div>
 			<Routes>
-				<Route path="*" element={<Home />} />
+				<Route path="/milionaire-game-app" element={<Home />} />
 				<Route path="/start-game" element={<StartGame />} />
 				<Route path="/score" element={<RewardScale />} />
 			</Routes>
