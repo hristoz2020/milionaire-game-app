@@ -111,7 +111,15 @@ const StartGame: FC = () => {
 				/>
 				<Timer isReset={isResetTimer} />
 				<button
-					className={`btn btn-dark rounded-5 p-1 text-decoration-none col-3 ${isVisibleNexBtn ? "" : "d-none"}`}
+					className={`position-absolute top-0 end-0 btn border-2 rounded m-2 p-2`}
+					onClick={() => stopGameSound()}
+				>
+					<i className="fa-solid fa-volume-xmark"></i>
+				</button>
+				<button
+					className={`btn btn-dark rounded-5 p-1 text-decoration-none col-3 ${
+						isVisibleNexBtn ? "" : "d-none"
+					}`}
 					onClick={() => handleNextQuestion()}
 				>
 					NEXT
