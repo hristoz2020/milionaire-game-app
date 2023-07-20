@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+	playWrongAnswerSound,
+	stopGameSound,
+} from "../constants/soundsCommands";
 
 const Timer = ({ isReset }: { isReset: boolean }) => {
 	const navigate = useNavigate();
@@ -27,9 +31,11 @@ const Timer = ({ isReset }: { isReset: boolean }) => {
 
 	if (seconds === 0) {
 		setTimeout(() => {
-			navigate('/score');
+			navigate("/score");
 			setSeconds(60);
-		}, 2000);
+			stopGameSound();
+			playWrongAnswerSound();
+		}, 3000);
 	}
 
 	return (

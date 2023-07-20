@@ -4,6 +4,7 @@ import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { resetPoints } from "../redux/slices/pointsSlice";
 import { resetQuestions, setIsResetTimer } from "../redux/slices/questionSlice";
 import { showModal } from "../redux/slices/modalSlice";
+import { playGameSound } from "../constants/soundsCommands";
 
 const RewardScale = () => {
 	const dispatch = useAppDispatch();
@@ -16,6 +17,7 @@ const RewardScale = () => {
 		dispatch(showModal(false));
 		dispatch(setIsResetTimer(true));
 		navigate("/start-game");
+		playGameSound();
 	};
 
 	return (

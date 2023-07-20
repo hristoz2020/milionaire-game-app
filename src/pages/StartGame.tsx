@@ -1,9 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import image from "../assets/images/image.webp";
-import Loader from "../components/Loader";
-import QuestionConainer from "../components/QuestionConainer";
-import Timer from "../components/Timer";
 import { showModal } from "../redux/slices/modalSlice";
 import { addPoint } from "../redux/slices/pointsSlice";
 import {
@@ -15,6 +11,15 @@ import {
 	setSelectedOption,
 } from "../redux/slices/questionSlice";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
+import QuestionConainer from "../components/QuestionConainer";
+import Loader from "../components/Loader";
+import Timer from "../components/Timer";
+import image from "../assets/images/image.webp";
+import {
+	playWrongAnswerSound,
+	stopGameSound,
+	stopWrongAnswerSound,
+} from "../constants/soundsCommands";
 
 const StartGame: FC = () => {
 	const dispatch = useAppDispatch();
@@ -33,7 +38,7 @@ const StartGame: FC = () => {
 	const [backgroundSuccess, setBackgroundSuccess] = useState<string>("");
 	const [backgroundDanger, setBackgroundDanger] = useState<string>("");
 	const [blinkingClass, setBlinkingClass] = useState<string>("");
-		
+
 	useEffect(() => {
 		void dispatch(getQuestions());
 		dispatch(setSelectedOption(null));
@@ -66,9 +71,12 @@ const StartGame: FC = () => {
 				setBackgroundSuccess("bg-success");
 				setBackgroundDanger("bg-danger");
 				setBlinkingClass("");
+				stopGameSound();
+				playWrongAnswerSound();
 				setTimeout(() => {
 					navigate("/score");
-				}, 2000);
+					stopWrongAnswerSound();
+				}, 3000);
 			}
 
 			if (option === questions[currentQuestionIndex].correct_answer) {
