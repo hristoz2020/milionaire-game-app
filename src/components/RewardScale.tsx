@@ -2,8 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { rewardsList } from "../constants/rewards";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { resetPoints } from "../redux/slices/pointsSlice";
-import { resetQuestions } from "../redux/slices/questionSlice";
-import { hideModal } from "../redux/slices/modalSlice";
+import { resetQuestions, setIsResetTimer } from "../redux/slices/questionSlice";
+import { showModal } from "../redux/slices/modalSlice";
 
 const RewardScale = () => {
 	const dispatch = useAppDispatch();
@@ -14,7 +14,8 @@ const RewardScale = () => {
 	const handlePlayAgainModal = () => {
 		dispatch(resetPoints());
 		dispatch(resetQuestions());
-		dispatch(hideModal());
+		dispatch(showModal(false));
+		dispatch(setIsResetTimer(true))
 		navigate("/start-game");
 	};
 

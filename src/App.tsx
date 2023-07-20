@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import RewardScale from "./components/RewardScale";
 import Home from "./pages/Home";
 import StartGame from "./pages/StartGame";
 
@@ -9,6 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/start-game" element={<StartGame />} />
+        <Route path="/score" element={<RewardScale />} />
       </Routes>
     </div>
   )

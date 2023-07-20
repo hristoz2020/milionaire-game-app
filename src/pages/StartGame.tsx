@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import image from "../assets/images/image.webp";
 import Loader from "../components/Loader";
 import QuestionConainer from "../components/QuestionConainer";
-import RewardScale from "../components/RewardScale";
 import Timer from "../components/Timer";
-import { hideModal, showModal } from "../redux/slices/modalSlice";
+import { showModal } from "../redux/slices/modalSlice";
 import { addPoint } from "../redux/slices/pointsSlice";
 import {
 	getQuestions,
@@ -18,39 +18,44 @@ import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 
 const StartGame: FC = () => {
 	const dispatch = useAppDispatch();
-	const {questions, isLoading, isVisibleNexBtn, isResetTimer} = useAppSelector(
-		(state: RootState) => state.questions
-	);
+	const navigate = useNavigate();
+	const {
+		questions,
+		isLoading,
+		isVisibleNexBtn,
+		isResetTimer,
+		currentQuestionIndex,
+	} = useAppSelector((state: RootState) => state.questions);
 	const isShowModal = useAppSelector(
-		(state: RootState) => state.showModal.isShow
+		(state: RootState) => state.modal.isShow
 	);
 	const points = useAppSelector((state: RootState) => state.points.points);
-	const currentQuestionIndex = useAppSelector(
-		(state: RootState) => state.questions.currentQuestionIndex
-	);
 	const [backgroundSuccess, setBackgroundSuccess] = useState<string>("");
-	const [backgroundDanger, setBackgroundDanger] =
-		useState<string>("");
+	const [backgroundDanger, setBackgroundDanger] = useState<string>("");
 	const [blinkingClass, setBlinkingClass] = useState<string>("");
 
 	useEffect(() => {
 		void dispatch(getQuestions());
 		dispatch(setSelectedOption(null));
-		dispatch(hideModal());
+		dispatch(showModal(false));
 		setBackgroundSuccess("");
 		setBackgroundDanger("");
-		dispatch(setIsResetTimer(true))
+		dispatch(setIsResetTimer(true));
 		dispatch(resetCurrentQuestionIndex());
 		dispatch(setIsVisibleNexBtn(false));
-	}, [dispatch, questions.length === 0]);
+	}, [dispatch]);
 
 	useEffect(() => {
 		if (points === 15) {
 			setTimeout(() => {
-				dispatch(showModal());
+				dispatch(showModal(true));
 			}, 2000);
 		}
 	}, [points, dispatch]);
+
+	useEffect(() => {
+		isShowModal && navigate("/score");
+	}, [isShowModal, navigate]);
 
 	const handleSelectOption = (option: string) => {
 		dispatch(setSelectedOption(option));
@@ -61,7 +66,7 @@ const StartGame: FC = () => {
 				setBackgroundDanger("bg-danger");
 				setBlinkingClass("");
 				setTimeout(() => {
-					dispatch(showModal());
+					navigate("/score");
 				}, 2000);
 			}
 
@@ -71,10 +76,8 @@ const StartGame: FC = () => {
 				setBackgroundDanger("bg-danger");
 				setBlinkingClass("");
 				dispatch(setIsVisibleNexBtn(true));
-
 			}
-			dispatch(setIsResetTimer(false))
-
+			dispatch(setIsResetTimer(false));
 		}, 3000);
 		setBlinkingClass("blinking-class");
 	};
@@ -83,7 +86,7 @@ const StartGame: FC = () => {
 		dispatch(setCurrentQuestionIndex());
 		dispatch(setSelectedOption(null));
 		dispatch(setIsVisibleNexBtn(false));
-		dispatch(setIsResetTimer(true))
+		dispatch(setIsResetTimer(true));
 
 		setBackgroundSuccess("");
 		setBackgroundDanger("");
@@ -91,7 +94,7 @@ const StartGame: FC = () => {
 
 	return (
 		<div className="game-page">
-			<div className="d-flex flex-column align-items-center justify-content-center mb-5">
+			<div className="d-flex flex-column align-items-center justify-content-center mb-1">
 				<img
 					src={image}
 					className="w-25 mt-5 mb-3"
@@ -116,7 +119,6 @@ const StartGame: FC = () => {
 					blinkingClass={blinkingClass}
 				/>
 			)}
-			{isShowModal && <RewardScale />}
 		</div>
 	);
 };

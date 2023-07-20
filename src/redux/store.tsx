@@ -23,7 +23,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
     questions: questionSlice,
 	points: pointsSlice,
-	showModal: modalSlice,
+	modal: modalSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

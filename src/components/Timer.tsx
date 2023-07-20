@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { showModal } from "../redux/slices/modalSlice";
-import { useAppDispatch } from "../redux/store";
+import { useNavigate } from "react-router-dom";
 
 const Timer = ({ isReset }: { isReset: boolean }) => {
-	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 	const [seconds, setSeconds] = useState(60);
 
 	useEffect(() => {
@@ -28,7 +27,7 @@ const Timer = ({ isReset }: { isReset: boolean }) => {
 
 	if (seconds === 0) {
 		setTimeout(() => {
-			dispatch(showModal());
+			navigate('/score');
 			setSeconds(60);
 		}, 2000);
 	}
