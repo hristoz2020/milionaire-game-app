@@ -1,11 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { processedText } from "../helpers/processedText";
-import {
-	playWrongAnswerSound,
-	stopGameSound,
-	stopWrongAnswerSound,
-} from "../helpers/soundsCommands";
+import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { showModal } from "../redux/slices/modalSlice";
 import { addPoint } from "../redux/slices/pointsSlice";
 import {
@@ -14,7 +9,13 @@ import {
 	setIsVisibleNexBtn,
 	setSelectedOption,
 } from "../redux/slices/questionsSlice";
-import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
+import {
+	playCorrectAnswerSound,
+	playWrongAnswerSound,
+	stopGameSound,
+	stopWrongAnswerSound,
+} from "../helpers/soundsCommands";
+import { processedText } from "../helpers/processedText";
 
 const Options: FC = () => {
 	const dispatch = useAppDispatch();
@@ -61,6 +62,7 @@ const Options: FC = () => {
 				setBlinkingClass("");
 				stopGameSound();
 				playWrongAnswerSound();
+
 				setTimeout(() => {
 					navigate("/score");
 					stopWrongAnswerSound();
@@ -72,6 +74,8 @@ const Options: FC = () => {
 				setBackgroundSuccess("bg-success");
 				setBackgroundDanger("bg-danger");
 				setBlinkingClass("");
+				stopGameSound();
+				playCorrectAnswerSound();
 				dispatch(setIsVisibleNexBtn(true));
 				dispatch(setIsTimerVisible(false));
 			}

@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import { rewardsList } from "../constants/rewards";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { resetPoints } from "../redux/slices/pointsSlice";
 import {
@@ -9,6 +8,7 @@ import {
 	setIsVisibleNexBtn,
 } from "../redux/slices/questionsSlice";
 import { showModal } from "../redux/slices/modalSlice";
+import { rewardsList } from "../constants/rewards";
 import { playGameSound } from "../helpers/soundsCommands";
 
 const RewardScale = () => {

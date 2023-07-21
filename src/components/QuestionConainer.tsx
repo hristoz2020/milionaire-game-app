@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { processedText } from "../helpers/processedText";
 import { RootState, useAppSelector } from "../redux/store";
+import { processedText } from "../helpers/processedText";
 import Options from "./Options";
 
 const QuestionConainer: FC = () => {

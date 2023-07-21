@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from "react";
+import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import {
 	getQuestions,
 	setCurrentQuestionIndex,
@@ -7,12 +8,15 @@ import {
 	setIsVisibleNexBtn,
 	setSelectedOption,
 } from "../redux/slices/questionsSlice";
-import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import QuestionConainer from "../components/QuestionConainer";
 import Loader from "../components/Loader";
 import Timer from "../components/Timer";
 import image from "../assets/images/image.webp";
-import { playGameSound, stopGameSound } from "../helpers/soundsCommands";
+import {
+	playGameSound,
+	stopCorrectAnswerSound,
+	stopGameSound,
+} from "../helpers/soundsCommands";
 
 const StartGame: FC = () => {
 	const dispatch = useAppDispatch();
@@ -32,6 +36,8 @@ const StartGame: FC = () => {
 		dispatch(setIsVisibleNexBtn(false));
 		dispatch(setIsResetTimer(true));
 		dispatch(setIsTimerVisible(true));
+		stopCorrectAnswerSound();
+		playGameSound();
 	};
 
 	const handleSound = () => {
