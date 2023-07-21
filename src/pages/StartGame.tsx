@@ -1,10 +1,8 @@
 import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { showModal } from "../redux/slices/modalSlice";
-import { addPoint } from "../redux/slices/pointsSlice";
 import {
 	getQuestions,
-	resetCurrentQuestionIndex,
 	setCurrentQuestionIndex,
 	setIsResetTimer,
 	setIsVisibleNexBtn,
@@ -15,41 +13,23 @@ import QuestionConainer from "../components/QuestionConainer";
 import Loader from "../components/Loader";
 import Timer from "../components/Timer";
 import image from "../assets/images/image.webp";
-import {
-	playGameSound,
-	playWrongAnswerSound,
-	stopGameSound,
-	stopWrongAnswerSound,
-} from "../helpers/soundsCommands";
+import { playGameSound, stopGameSound } from "../helpers/soundsCommands";
 
 const StartGame: FC = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const {
-		questions,
-		isLoading,
-		isVisibleNexBtn,
-		isResetTimer,
-		currentQuestionIndex,
-	} = useAppSelector((state: RootState) => state.questions);
+	const { isLoading, isVisibleNexBtn, isResetTimer } = useAppSelector(
+		(state: RootState) => state.questions
+	);
 	const isShowModal = useAppSelector(
 		(state: RootState) => state.modal.isShow
 	);
 	const points = useAppSelector((state: RootState) => state.points.points);
-	const [backgroundSuccess, setBackgroundSuccess] = useState<string>("");
-	const [backgroundDanger, setBackgroundDanger] = useState<string>("");
-	const [blinkingClass, setBlinkingClass] = useState<string>("");
 	const [isVolumeActive, setIsVolumeActive] = useState<boolean>(false);
 
 	useEffect(() => {
 		void dispatch(getQuestions());
-		dispatch(setSelectedOption(null));
-		dispatch(showModal(false));
-		setBackgroundSuccess("");
-		setBackgroundDanger("");
 		dispatch(setIsResetTimer(true));
-		dispatch(resetCurrentQuestionIndex());
-		dispatch(setIsVisibleNexBtn(false));
 	}, [dispatch]);
 
 	useEffect(() => {
@@ -65,42 +45,11 @@ const StartGame: FC = () => {
 		isShowModal && navigate("/score");
 	}, [isShowModal, navigate]);
 
-	const handleSelectOption = (option: string) => {
-		dispatch(setSelectedOption(option));
-
-		setTimeout(() => {
-			if (option !== questions[currentQuestionIndex].correct_answer) {
-				setBackgroundSuccess("bg-success");
-				setBackgroundDanger("bg-danger");
-				setBlinkingClass("");
-				stopGameSound();
-				playWrongAnswerSound();
-				setTimeout(() => {
-					navigate("/score");
-					stopWrongAnswerSound();
-				}, 3000);
-			}
-
-			if (option === questions[currentQuestionIndex].correct_answer) {
-				dispatch(addPoint());
-				setBackgroundSuccess("bg-success");
-				setBackgroundDanger("bg-danger");
-				setBlinkingClass("");
-				dispatch(setIsVisibleNexBtn(true));
-			}
-			dispatch(setIsResetTimer(false));
-		}, 3000);
-		setBlinkingClass("blinking-class");
-	};
-
 	const handleNextQuestion = () => {
 		dispatch(setCurrentQuestionIndex());
 		dispatch(setSelectedOption(null));
 		dispatch(setIsVisibleNexBtn(false));
 		dispatch(setIsResetTimer(true));
-
-		setBackgroundSuccess("");
-		setBackgroundDanger("");
 	};
 
 	const handleSound = () => {
@@ -132,24 +81,19 @@ const StartGame: FC = () => {
 				>
 					<i className={`fa-solid ${handleSoundIcon}`}></i>
 				</button>
-				<button
-					className={`btn btn-dark rounded-5 p-1 text-decoration-none col-3 ${
-						isVisibleNexBtn ? "" : "d-none"
-					}`}
-					onClick={() => handleNextQuestion()}
-				>
-					NEXT
-				</button>
+				<div className="next-btn-container">
+					<button
+						className={`btn btn-dark rounded-5 p-2 text-decoration-none px-5 ${
+							isVisibleNexBtn ? "" : "d-none"
+						}`}
+						onClick={() => handleNextQuestion()}
+					>
+						NEXT
+					</button>
+				</div>
 			</div>
 			{isLoading && <Loader />}
-			{!isLoading && (
-				<QuestionConainer
-					onSelectOption={handleSelectOption}
-					backgroundSuccess={backgroundSuccess}
-					backgroundDanger={backgroundDanger}
-					blinkingClass={blinkingClass}
-				/>
-			)}
+			{!isLoading && <QuestionConainer />}
 		</div>
 	);
 };

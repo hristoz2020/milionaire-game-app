@@ -1,19 +1,26 @@
-import { FC } from "react";
-import { RootState, useAppSelector } from "../redux/store";
+import { FC, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+	playWrongAnswerSound,
+	stopGameSound,
+	stopWrongAnswerSound,
+} from "../helpers/soundsCommands";
+import { addPoint } from "../redux/slices/pointsSlice";
+import {
+	setIsResetTimer,
+	setIsVisibleNexBtn,
+	setSelectedOption,
+} from "../redux/slices/questionSlice";
+import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 
-type OptionProps = {
-	onSelectOption: (option: string) => void;
-	backgroundSuccess: string;
-	backgroundDanger: string;
-	blinkingClass: string;
-};
+const Options: FC = () => {
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 
-const Options: FC<OptionProps> = ({
-	onSelectOption,
-	blinkingClass,
-	backgroundSuccess,
-	backgroundDanger,
-}) => {
+	const [backgroundSuccess, setBackgroundSuccess] = useState<string>("");
+	const [backgroundDanger, setBackgroundDanger] = useState<string>("");
+	const [blinkingClass, setBlinkingClass] = useState<string>("");
+
 	const { questions, currentQuestionIndex, selectedOption, isVisibleNexBtn } =
 		useAppSelector((state: RootState) => state.questions);
 	const options: string[] = [
@@ -24,6 +31,39 @@ const Options: FC<OptionProps> = ({
 	const checkCurrentOption = questions[
 		currentQuestionIndex
 	]?.incorrect_answers.find((answer) => answer === selectedOption);
+
+	useEffect(() => {
+		setBackgroundSuccess("");
+		setBackgroundDanger("");
+	}, [currentQuestionIndex]);
+
+	const handleSelectOption = (option: string) => {
+		dispatch(setSelectedOption(option));
+		setBlinkingClass("blinking-class");
+
+		setTimeout(() => {
+			if (option !== questions[currentQuestionIndex].correct_answer) {
+				setBackgroundSuccess("bg-success");
+				setBackgroundDanger("bg-danger");
+				setBlinkingClass("");
+				stopGameSound();
+				playWrongAnswerSound();
+				setTimeout(() => {
+					navigate("/score");
+					stopWrongAnswerSound();
+				}, 3000);
+			}
+
+			if (option === questions[currentQuestionIndex].correct_answer) {
+				dispatch(addPoint());
+				setBackgroundSuccess("bg-success");
+				setBackgroundDanger("bg-danger");
+				setBlinkingClass("");
+				dispatch(setIsVisibleNexBtn(true));
+			}
+			dispatch(setIsResetTimer(false));
+		}, 3000);
+	};
 
 	return (
 		<div className="d-flex flex-wrap">
@@ -47,7 +87,7 @@ const Options: FC<OptionProps> = ({
 						} 
                     `}
 						disabled={isVisibleNexBtn}
-						onClick={() => onSelectOption(option)}
+						onClick={() => handleSelectOption(option)}
 					>
 						{option}
 					</button>

@@ -2,19 +2,7 @@ import { FC } from "react";
 import { RootState, useAppSelector } from "../redux/store";
 import Options from "./Options";
 
-type QuestionProps = {
-	onSelectOption: (option: string) => void;
-	backgroundSuccess: string;
-	backgroundDanger: string;
-	blinkingClass: string;
-};
-
-const QuestionConainer: FC<QuestionProps> = ({
-	onSelectOption,
-	backgroundSuccess,
-	backgroundDanger,
-	blinkingClass,
-}) => {
+const QuestionConainer: FC = () => {
 	const { questions, currentQuestionIndex } = useAppSelector(
 		(state: RootState) => state.questions
 	);
@@ -24,12 +12,7 @@ const QuestionConainer: FC<QuestionProps> = ({
 			<p className="d-flex justify-content-center bg-white text-center rounded-3 p-3">
 				{questions[currentQuestionIndex]?.question}
 			</p>
-			<Options
-				onSelectOption={onSelectOption}
-				blinkingClass={blinkingClass}
-				backgroundDanger={backgroundDanger}
-				backgroundSuccess={backgroundSuccess}
-			/>
+			<Options />
 		</div>
 	);
 };

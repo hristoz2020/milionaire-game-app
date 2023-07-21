@@ -2,7 +2,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { rewardsList } from "../constants/rewards";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { resetPoints } from "../redux/slices/pointsSlice";
-import { resetQuestions, setIsResetTimer } from "../redux/slices/questionSlice";
+import {
+	resetCurrentQuestionIndex,
+	resetQuestions,
+	setIsResetTimer,
+} from "../redux/slices/questionSlice";
 import { showModal } from "../redux/slices/modalSlice";
 import { playGameSound } from "../helpers/soundsCommands";
 
@@ -16,6 +20,7 @@ const RewardScale = () => {
 		dispatch(resetQuestions());
 		dispatch(showModal(false));
 		dispatch(setIsResetTimer(true));
+		dispatch(resetCurrentQuestionIndex());
 		navigate("/start-game");
 		playGameSound();
 	};
