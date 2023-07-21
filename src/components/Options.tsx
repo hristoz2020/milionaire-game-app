@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { showModal } from "../redux/slices/modalSlice";
@@ -33,14 +33,6 @@ const Options: FC = () => {
 		isVolumeActive,
 	} = useAppSelector((state: RootState) => state.questions);
 	const points = useAppSelector((state: RootState) => state.points.points);
-	const options: string[] = [
-		questions[currentQuestionIndex]?.incorrect_answers,
-		questions[currentQuestionIndex]?.correct_answer,
-	].flat();
-
-	const checkCurrentOption = questions[
-		currentQuestionIndex
-	]?.incorrect_answers.find((answer) => answer === selectedOption);
 
 	useEffect(() => {
 		setBackgroundSuccess("");
@@ -55,6 +47,21 @@ const Options: FC = () => {
 			}, 2000);
 		}
 	}, [points, dispatch]);
+
+	const options: string[] = useMemo(() => {
+		const shuffledOptions = [
+			questions[currentQuestionIndex]?.incorrect_answers,
+			questions[currentQuestionIndex]?.correct_answer,
+		]
+			.flat()
+			.slice()
+			.sort(() => Math.random() - 0.5);
+		return shuffledOptions;
+	}, [questions, currentQuestionIndex]);
+
+	const checkCurrentOption = questions[
+		currentQuestionIndex
+	]?.incorrect_answers.find((answer) => answer === selectedOption);
 
 	const handleSelectOption = (option: string) => {
 		dispatch(setSelectedOption(option));
@@ -87,7 +94,7 @@ const Options: FC = () => {
 			dispatch(setIsResetTimer(false));
 		}, 3000);
 	};
-	
+
 	return (
 		<div className="d-flex flex-wrap">
 			{options.map((option, index) => {

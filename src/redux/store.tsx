@@ -18,7 +18,7 @@ import questionsSlice from "./slices/questionsSlice";
 const persistConfig = {
 	key: "root",
 	storage,
-	whitelist: []
+	whitelist: ["questions"]
 };
 
 const rootReducer = combineReducers({

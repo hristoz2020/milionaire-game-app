@@ -34,6 +34,10 @@ const StartGame: FC = () => {
 		dispatch(setIsResetTimer(true));
 	}, [dispatch]);
 
+	useEffect(() => {
+		isVolumeActive ? playGameSound() : stopGameSound();
+	}, [isVolumeActive]);
+
 	const handleNextQuestion = () => {
 		dispatch(setCurrentQuestionIndex());
 		dispatch(setSelectedOption(null));
@@ -59,12 +63,12 @@ const StartGame: FC = () => {
 		? "fa-volume-high"
 		: "fa-volume-xmark";
 
-		return (
+	return (
 		<div className="game-page">
 			<div className="d-flex flex-column align-items-center justify-content-center mb-1">
 				<img
 					src={image}
-					className="w-25 mt-5 mb-3"
+					className="w-25 mt-4 mb-3"
 					alt="background-image"
 				/>
 				<button
