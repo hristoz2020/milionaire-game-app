@@ -14,7 +14,7 @@ const Home: FC = () => {
 				/>
 				<Link
 					to="/start-game"
-					className="btn btn-dark rounded-5 p-3 mt-4 text-decoration-none col-3"
+					className="btn btn-dark rounded-5 p-3 mt-4 text-decoration-none col-5 col-sm-4"
 					onClick={playGameSound}
 				>
 					Start Game

@@ -68,7 +68,7 @@ const RewardScale = () => {
 					<Link
 						to={"/start-game"}
 						type="button"
-						className="btn btn-dark rounded-5 p-2 text-decoration-none col-3"
+						className="btn btn-dark rounded-5 p-2 text-decoration-none col-4 col-sm-3"
 						onClick={handlePlayAgain}
 					>
 						Play Again

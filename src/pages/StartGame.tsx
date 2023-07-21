@@ -45,8 +45,8 @@ const StartGame: FC = () => {
 	};
 
 	const handleSoundIcon = isVolumeActive
-		? "fa-volume-high"
-		: "fa-volume-xmark";
+		? "fa-volume-xmark"
+		: "fa-volume-high";
 
 	return (
 		<div className="game-page">
