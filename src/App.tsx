@@ -10,7 +10,6 @@ function App() {
 				<Route path="/" element={<Home />} />
 				<Route path="/start-game" element={<StartGame />} />
 				<Route path="/score" element={<RewardScale />} />
-				<Route path="*" element={<Home />} />
 			</Routes>
 		</div>
 	);
