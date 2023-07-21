@@ -64,11 +64,14 @@ const Options: FC = () => {
 			dispatch(setIsResetTimer(false));
 		}, 3000);
 	};
-
+	
 	return (
 		<div className="d-flex flex-wrap">
 			{options.map((option, index) => {
 				const checkOptions = selectedOption === option;
+				const processedAnswer = option
+					?.replace(/&quot;/g, '"')
+					.replace(/&#039;/g, "'");
 
 				return (
 					<button
@@ -89,7 +92,7 @@ const Options: FC = () => {
 						disabled={isVisibleNexBtn}
 						onClick={() => handleSelectOption(option)}
 					>
-						{option}
+						{processedAnswer}
 					</button>
 				);
 			})}

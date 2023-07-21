@@ -7,10 +7,14 @@ const QuestionConainer: FC = () => {
 		(state: RootState) => state.questions
 	);
 
+	const processedQuestions = questions[currentQuestionIndex]?.question
+		.replace(/&quot;/g, '"')
+		.replace(/&#039;/g, "'");
+
 	return (
 		<div className="col-10 m-auto">
 			<p className="d-flex justify-content-center bg-white text-center rounded-3 p-3">
-				{questions[currentQuestionIndex]?.question}
+				{processedQuestions}
 			</p>
 			<Options />
 		</div>

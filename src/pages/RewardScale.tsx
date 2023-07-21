@@ -6,6 +6,7 @@ import {
 	resetCurrentQuestionIndex,
 	resetQuestions,
 	setIsResetTimer,
+	setIsVisibleNexBtn,
 } from "../redux/slices/questionSlice";
 import { showModal } from "../redux/slices/modalSlice";
 import { playGameSound } from "../helpers/soundsCommands";
@@ -21,6 +22,7 @@ const RewardScale = () => {
 		dispatch(showModal(false));
 		dispatch(setIsResetTimer(true));
 		dispatch(resetCurrentQuestionIndex());
+		dispatch(setIsVisibleNexBtn(false));
 		navigate("/start-game");
 		playGameSound();
 	};
