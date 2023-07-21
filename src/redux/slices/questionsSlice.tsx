@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { Question, Response_code } from "../../types/questionTypes";
-import { BASE_URL } from "../../service/config";
+import { BASE_URL } from "../../services/config";
 
-interface QuestionState {
+interface QuestionsState {
 	responseQuestions: Response_code;
 	questions: Question[];
 	isLoading: boolean;
@@ -10,9 +10,10 @@ interface QuestionState {
 	selectedOption: string | null;
 	isVisibleNexBtn: boolean;
 	isResetTimer: boolean;
+	isTimerVisible: boolean;
 }
 
-const initialState: QuestionState = {
+const initialState: QuestionsState = {
 	responseQuestions: { status: 0, results: [] },
 	questions: [],
 	isLoading: false,
@@ -20,6 +21,7 @@ const initialState: QuestionState = {
 	selectedOption: null,
 	isVisibleNexBtn: false,
 	isResetTimer: false,
+	isTimerVisible: true,
 };
 
 export const getQuestions = createAsyncThunk("questions/get", async () => {
@@ -32,7 +34,7 @@ export const getQuestions = createAsyncThunk("questions/get", async () => {
 	return data.results;
 });
 
-const questionSlice = createSlice({
+const questionsSlice = createSlice({
 	name: "questions",
 	initialState,
 	reducers: {
@@ -53,6 +55,9 @@ const questionSlice = createSlice({
 		},
 		setIsResetTimer: (state, action: PayloadAction<boolean>) => {
 			state.isResetTimer = action.payload;
+		},
+		setIsTimerVisible: (state, action: PayloadAction<boolean>) => {
+			state.isTimerVisible = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -80,5 +85,6 @@ export const {
 	setSelectedOption,
 	setIsVisibleNexBtn,
 	setIsResetTimer,
-} = questionSlice.actions;
-export default questionSlice.reducer;
+	setIsTimerVisible
+} = questionsSlice.actions;
+export default questionsSlice.reducer;

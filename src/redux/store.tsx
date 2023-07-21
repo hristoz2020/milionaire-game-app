@@ -13,7 +13,7 @@ import {
 import storage from "redux-persist/lib/storage";
 import modalSlice from "./slices/modalSlice";
 import pointsSlice from "./slices/pointsSlice";
-import questionSlice from "./slices/questionSlice";
+import questionsSlice from "./slices/questionsSlice";
 
 const persistConfig = {
 	key: "root",
@@ -22,7 +22,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-    questions: questionSlice,
+    questions: questionsSlice,
 	points: pointsSlice,
 	modal: modalSlice,
 });

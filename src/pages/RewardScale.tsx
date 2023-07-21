@@ -7,7 +7,7 @@ import {
 	resetQuestions,
 	setIsResetTimer,
 	setIsVisibleNexBtn,
-} from "../redux/slices/questionSlice";
+} from "../redux/slices/questionsSlice";
 import { showModal } from "../redux/slices/modalSlice";
 import { playGameSound } from "../helpers/soundsCommands";
 
@@ -33,24 +33,28 @@ const RewardScale = () => {
 				<div className="d-flex justify-content-center align-items-center flex-column">
 					<div className="mt-4">
 						{points >= 0 && points < 15 && (
-							<h3 className="text-center text-light">
-								End of the game! You submitted a wrong answer or
-								timed out. Your questions answered are {points}!
-							</h3>
+							<div className="text-center text-light">
+								<h1>End of the game!</h1>
+								<h3>Submitted wrong answer or timed out.</h3>
+								<h4>Answered questions : {points}</h4>
+							</div>
 						)}
 						{points === 15 && (
-							<h3 className="text-center text-light">
-								Congratulations, you won 100 000 ! You are
-								answered {points} questions correctly!
-							</h3>
+							<div className="text-center text-light">
+								<h1>Congratulations, you won 100 000!</h1>
+								<h3>
+									You are answered {points} questions
+									correctly!
+								</h3>
+							</div>
 						)}
 					</div>
-					<ul className="list-unstyled rounded-3 bg-secondary p-4 px-5 mt-5">
+					<ul className="list-unstyled shadow-lg rounded-3 p-4 px-5 mt-5">
 						{rewardsList.map((reward) => (
 							<li
-								className={`rounded text-left text-danger text-light ps-3 m-auto ${
+								className={`rounded-3 text-left text-danger text-light px-2 m-auto ${
 									reward.place === points
-										? "border border-dark "
+										? "bg-dark"
 										: ""
 								}`}
 								key={reward.id}
