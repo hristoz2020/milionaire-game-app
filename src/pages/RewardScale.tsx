@@ -15,6 +15,9 @@ const RewardScale = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const points = useAppSelector((state: RootState) => state.points.points);
+	const isVolumeActive = useAppSelector(
+		(state) => state.questions.isVolumeActive
+	);
 
 	const handlePlayAgain = () => {
 		dispatch(resetPoints());
@@ -24,7 +27,7 @@ const RewardScale = () => {
 		dispatch(resetCurrentQuestionIndex());
 		dispatch(setIsVisibleNexBtn(false));
 		navigate("/start-game");
-		playGameSound();
+		isVolumeActive && playGameSound();
 	};
 
 	return (
@@ -53,9 +56,7 @@ const RewardScale = () => {
 						{rewardsList.map((reward) => (
 							<li
 								className={`rounded-3 text-left text-danger text-light px-2 m-auto ${
-									reward.place === points
-										? "bg-dark"
-										: ""
+									reward.place === points ? "bg-dark" : ""
 								}`}
 								key={reward.id}
 							>

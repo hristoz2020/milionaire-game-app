@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { playWrongAnswerSound, stopGameSound } from "../helpers/soundsCommands";
+import { useAppSelector } from "../redux/store";
 
 const Timer = ({ isReset }: { isReset: boolean }) => {
 	const navigate = useNavigate();
+	const isVolumeActive = useAppSelector(
+		(state) => state.questions.isVolumeActive
+	);
 	const [seconds, setSeconds] = useState(60);
 
 	useEffect(() => {
@@ -30,8 +34,8 @@ const Timer = ({ isReset }: { isReset: boolean }) => {
 		setTimeout(() => {
 			navigate("/score");
 			setSeconds(60);
-			stopGameSound();
-			playWrongAnswerSound();
+			isVolumeActive && stopGameSound();
+			isVolumeActive && playWrongAnswerSound();
 		}, 3000);
 	}
 

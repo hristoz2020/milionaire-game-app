@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import {
 	getQuestions,
@@ -6,6 +6,7 @@ import {
 	setIsResetTimer,
 	setIsTimerVisible,
 	setIsVisibleNexBtn,
+	setIsVolumeActive,
 	setSelectedOption,
 } from "../redux/slices/questionsSlice";
 import QuestionConainer from "../components/QuestionConainer";
@@ -20,10 +21,13 @@ import {
 
 const StartGame: FC = () => {
 	const dispatch = useAppDispatch();
-	const { isLoading, isVisibleNexBtn, isResetTimer, isTimerVisible } =
-		useAppSelector((state: RootState) => state.questions);
-
-	const [isVolumeActive, setIsVolumeActive] = useState<boolean>(false);
+	const {
+		isLoading,
+		isVisibleNexBtn,
+		isResetTimer,
+		isTimerVisible,
+		isVolumeActive,
+	} = useAppSelector((state: RootState) => state.questions);
 
 	useEffect(() => {
 		void dispatch(getQuestions());
@@ -36,25 +40,26 @@ const StartGame: FC = () => {
 		dispatch(setIsVisibleNexBtn(false));
 		dispatch(setIsResetTimer(true));
 		dispatch(setIsTimerVisible(true));
-		stopCorrectAnswerSound();
-		playGameSound();
+
+		isVolumeActive && stopCorrectAnswerSound();
+		isVolumeActive && playGameSound();
 	};
 
 	const handleSound = () => {
 		if (isVolumeActive) {
-			playGameSound();
-			setIsVolumeActive(false);
-		} else {
 			stopGameSound();
-			setIsVolumeActive(true);
+			dispatch(setIsVolumeActive(false));
+		} else {
+			playGameSound();
+			dispatch(setIsVolumeActive(true));
 		}
 	};
 
 	const handleSoundIcon = isVolumeActive
-		? "fa-volume-xmark"
-		: "fa-volume-high";
+		? "fa-volume-high"
+		: "fa-volume-xmark";
 
-	return (
+		return (
 		<div className="game-page">
 			<div className="d-flex flex-column align-items-center justify-content-center mb-1">
 				<img

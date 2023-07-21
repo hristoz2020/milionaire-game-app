@@ -11,6 +11,7 @@ interface QuestionsState {
 	isVisibleNexBtn: boolean;
 	isResetTimer: boolean;
 	isTimerVisible: boolean;
+	isVolumeActive: boolean;
 }
 
 const initialState: QuestionsState = {
@@ -22,6 +23,7 @@ const initialState: QuestionsState = {
 	isVisibleNexBtn: false,
 	isResetTimer: false,
 	isTimerVisible: true,
+	isVolumeActive: true,
 };
 
 export const getQuestions = createAsyncThunk("questions/get", async () => {
@@ -59,6 +61,9 @@ const questionsSlice = createSlice({
 		setIsTimerVisible: (state, action: PayloadAction<boolean>) => {
 			state.isTimerVisible = action.payload;
 		},
+		setIsVolumeActive: (state, action: PayloadAction<boolean>) => {
+			state.isVolumeActive = action.payload;
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -85,6 +90,7 @@ export const {
 	setSelectedOption,
 	setIsVisibleNexBtn,
 	setIsResetTimer,
-	setIsTimerVisible
+	setIsTimerVisible,
+	setIsVolumeActive,
 } = questionsSlice.actions;
 export default questionsSlice.reducer;

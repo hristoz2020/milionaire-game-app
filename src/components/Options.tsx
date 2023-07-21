@@ -25,8 +25,13 @@ const Options: FC = () => {
 	const [backgroundDanger, setBackgroundDanger] = useState<string>("");
 	const [blinkingClass, setBlinkingClass] = useState<string>("");
 
-	const { questions, currentQuestionIndex, selectedOption, isVisibleNexBtn } =
-		useAppSelector((state: RootState) => state.questions);
+	const {
+		questions,
+		currentQuestionIndex,
+		selectedOption,
+		isVisibleNexBtn,
+		isVolumeActive,
+	} = useAppSelector((state: RootState) => state.questions);
 	const points = useAppSelector((state: RootState) => state.points.points);
 	const options: string[] = [
 		questions[currentQuestionIndex]?.incorrect_answers,
@@ -60,9 +65,8 @@ const Options: FC = () => {
 				setBackgroundSuccess("bg-success");
 				setBackgroundDanger("bg-danger");
 				setBlinkingClass("");
-				stopGameSound();
-				playWrongAnswerSound();
-
+				isVolumeActive && stopGameSound();
+				isVolumeActive && playWrongAnswerSound();
 				setTimeout(() => {
 					navigate("/score");
 					stopWrongAnswerSound();
@@ -74,8 +78,8 @@ const Options: FC = () => {
 				setBackgroundSuccess("bg-success");
 				setBackgroundDanger("bg-danger");
 				setBlinkingClass("");
-				stopGameSound();
-				playCorrectAnswerSound();
+				isVolumeActive && stopGameSound();
+				isVolumeActive && playCorrectAnswerSound();
 				dispatch(setIsVisibleNexBtn(true));
 				dispatch(setIsTimerVisible(false));
 			}
@@ -83,7 +87,7 @@ const Options: FC = () => {
 			dispatch(setIsResetTimer(false));
 		}, 3000);
 	};
-
+	
 	return (
 		<div className="d-flex flex-wrap">
 			{options.map((option, index) => {
