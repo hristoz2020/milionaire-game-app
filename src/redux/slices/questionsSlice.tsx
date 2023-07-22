@@ -9,8 +9,6 @@ interface QuestionsState {
 	currentQuestionIndex: number;
 	selectedOption: string | null;
 	isVisibleNexBtn: boolean;
-	isResetTimer: boolean;
-	isTimerVisible: boolean;
 	isVolumeActive: boolean;
 }
 
@@ -21,8 +19,6 @@ const initialState: QuestionsState = {
 	currentQuestionIndex: 0,
 	selectedOption: null,
 	isVisibleNexBtn: false,
-	isResetTimer: false,
-	isTimerVisible: true,
 	isVolumeActive: true,
 };
 
@@ -55,12 +51,6 @@ const questionsSlice = createSlice({
 		setIsVisibleNexBtn: (state, action: PayloadAction<boolean>) => {
 			state.isVisibleNexBtn = action.payload;
 		},
-		setIsResetTimer: (state, action: PayloadAction<boolean>) => {
-			state.isResetTimer = action.payload;
-		},
-		setIsTimerVisible: (state, action: PayloadAction<boolean>) => {
-			state.isTimerVisible = action.payload;
-		},
 		setIsVolumeActive: (state, action: PayloadAction<boolean>) => {
 			state.isVolumeActive = action.payload;
 		},
@@ -89,8 +79,6 @@ export const {
 	resetCurrentQuestionIndex,
 	setSelectedOption,
 	setIsVisibleNexBtn,
-	setIsResetTimer,
-	setIsTimerVisible,
 	setIsVolumeActive,
 } = questionsSlice.actions;
 export default questionsSlice.reducer;

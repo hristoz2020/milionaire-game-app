@@ -11,20 +11,20 @@ import {
 	REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import modalSlice from "./slices/modalSlice";
+import scoreSlice from "./slices/scoreSlice";
 import pointsSlice from "./slices/pointsSlice";
 import questionsSlice from "./slices/questionsSlice";
 
 const persistConfig = {
 	key: "root",
 	storage,
-	whitelist: ["questions"]
+	whitelist: ["questions"],
 };
 
 const rootReducer = combineReducers({
-    questions: questionsSlice,
+	questions: questionsSlice,
 	points: pointsSlice,
-	modal: modalSlice,
+	score: scoreSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

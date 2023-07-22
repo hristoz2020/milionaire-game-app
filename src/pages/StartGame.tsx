@@ -3,8 +3,6 @@ import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import {
 	getQuestions,
 	setCurrentQuestionIndex,
-	setIsResetTimer,
-	setIsTimerVisible,
 	setIsVisibleNexBtn,
 	setIsVolumeActive,
 	setSelectedOption,
@@ -21,18 +19,18 @@ import {
 
 const StartGame: FC = () => {
 	const dispatch = useAppDispatch();
-	const {
-		isLoading,
-		isVisibleNexBtn,
-		isResetTimer,
-		isTimerVisible,
-		isVolumeActive,
-	} = useAppSelector((state: RootState) => state.questions);
+	const { questions, isLoading, isVisibleNexBtn, isVolumeActive } =
+		useAppSelector((state: RootState) => state.questions);
 
 	useEffect(() => {
-		void dispatch(getQuestions());
-		dispatch(setIsResetTimer(true));
-	}, [dispatch]);
+		if (
+			questions.length <= 0 ||
+			questions === undefined ||
+			questions === null
+		) {
+			void dispatch(getQuestions());
+		}
+	}, [dispatch, questions]);
 
 	useEffect(() => {
 		isVolumeActive ? playGameSound() : stopGameSound();
@@ -42,8 +40,6 @@ const StartGame: FC = () => {
 		dispatch(setCurrentQuestionIndex());
 		dispatch(setSelectedOption(null));
 		dispatch(setIsVisibleNexBtn(false));
-		dispatch(setIsResetTimer(true));
-		dispatch(setIsTimerVisible(true));
 
 		isVolumeActive && stopCorrectAnswerSound();
 		isVolumeActive && playGameSound();
@@ -78,9 +74,7 @@ const StartGame: FC = () => {
 					<i className={`fa-solid ${handleSoundIcon}`}></i>
 				</button>
 				<div className="question-state-container d-flex align-items-center">
-					{isTimerVisible && !isLoading && (
-						<Timer isReset={isResetTimer} />
-					)}
+					{!isVisibleNexBtn && !isLoading && <Timer />}
 					<button
 						className={`btn btn-dark rounded-5 p-2 text-decoration-none px-5 ${
 							isVisibleNexBtn ? "" : "d-none"

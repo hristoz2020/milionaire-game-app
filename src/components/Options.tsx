@@ -1,11 +1,9 @@
 import { FC, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
-import { showModal } from "../redux/slices/modalSlice";
+import { showScore } from "../redux/slices/scoreSlice";
 import { addPoint } from "../redux/slices/pointsSlice";
 import {
-	setIsResetTimer,
-	setIsTimerVisible,
 	setIsVisibleNexBtn,
 	setSelectedOption,
 } from "../redux/slices/questionsSlice";
@@ -21,9 +19,11 @@ const Options: FC = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
-	const [backgroundSuccess, setBackgroundSuccess] = useState<string>("");
-	const [backgroundDanger, setBackgroundDanger] = useState<string>("");
-	const [blinkingClass, setBlinkingClass] = useState<string>("");
+	const [currentBtnClass, setCurrentBtnClass] = useState({
+		backgroundSuccess: "",
+		backgroundDanger: "",
+		blinkingClass: "",
+	});
 
 	const {
 		questions,
@@ -35,18 +35,13 @@ const Options: FC = () => {
 	const points = useAppSelector((state: RootState) => state.points.points);
 
 	useEffect(() => {
-		setBackgroundSuccess("");
-		setBackgroundDanger("");
-	}, [currentQuestionIndex]);
-
-	useEffect(() => {
 		if (points === 15) {
 			dispatch(setIsVisibleNexBtn(false));
 			setTimeout(() => {
-				dispatch(showModal(true));
+				dispatch(showScore(true));
 			}, 2000);
 		}
-	}, [points, dispatch]);
+	}, [points, dispatch, currentQuestionIndex]);
 
 	const options: string[] = useMemo(() => {
 		const shuffledOptions = [
@@ -59,19 +54,25 @@ const Options: FC = () => {
 		return shuffledOptions;
 	}, [questions, currentQuestionIndex]);
 
-	const checkCurrentOption = questions[
+	const checkSelectedWrongOption = questions[
 		currentQuestionIndex
 	]?.incorrect_answers.find((answer) => answer === selectedOption);
 
 	const handleSelectOption = (option: string) => {
 		dispatch(setSelectedOption(option));
-		setBlinkingClass("blinking-class");
+		setCurrentBtnClass({
+			backgroundSuccess: "",
+			backgroundDanger: "",
+			blinkingClass: "blinking-class",
+		});
 
 		setTimeout(() => {
 			if (option !== questions[currentQuestionIndex].correct_answer) {
-				setBackgroundSuccess("bg-success");
-				setBackgroundDanger("bg-danger");
-				setBlinkingClass("");
+				setCurrentBtnClass({
+					backgroundSuccess: "bg-success",
+					backgroundDanger: "bg-danger",
+					blinkingClass: "",
+				});
 				isVolumeActive && stopGameSound();
 				isVolumeActive && playWrongAnswerSound();
 				setTimeout(() => {
@@ -82,16 +83,15 @@ const Options: FC = () => {
 
 			if (option === questions[currentQuestionIndex].correct_answer) {
 				dispatch(addPoint());
-				setBackgroundSuccess("bg-success");
-				setBackgroundDanger("bg-danger");
-				setBlinkingClass("");
+				setCurrentBtnClass({
+					backgroundSuccess: "bg-success",
+					backgroundDanger: "bg-danger",
+					blinkingClass: "",
+				});
 				isVolumeActive && stopGameSound();
 				isVolumeActive && playCorrectAnswerSound();
 				dispatch(setIsVisibleNexBtn(true));
-				dispatch(setIsTimerVisible(false));
 			}
-
-			dispatch(setIsResetTimer(false));
 		}, 3000);
 	};
 
@@ -105,15 +105,17 @@ const Options: FC = () => {
 					<button
 						key={index}
 						className={`border-dark rounded-3 col-md-6 col-sm-12 col-12 p-3 mt-1 ${
-							checkOptions ? blinkingClass : ""
+							checkOptions ? currentBtnClass.blinkingClass : ""
 						} ${
 							option ===
-							questions[currentQuestionIndex]?.correct_answer
-								? backgroundSuccess
+								questions[currentQuestionIndex]
+									?.correct_answer && selectedOption
+								? currentBtnClass.backgroundSuccess
 								: ""
 						} ${
-							option === checkCurrentOption && selectedOption
-								? backgroundDanger
+							option === checkSelectedWrongOption &&
+							selectedOption
+								? currentBtnClass.backgroundDanger
 								: ""
 						} 
                     `}

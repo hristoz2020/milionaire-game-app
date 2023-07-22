@@ -10,13 +10,13 @@ const QuestionConainer: FC = () => {
 	const { questions, currentQuestionIndex } = useAppSelector(
 		(state: RootState) => state.questions
 	);
-	const isShowModal = useAppSelector(
-		(state: RootState) => state.modal.isShow
+	const isShowScore = useAppSelector(
+		(state: RootState) => state.score.isShowScore
 	);
 
 	useEffect(() => {
-		isShowModal && navigate("/score");
-	}, [isShowModal, navigate]);
+		isShowScore && navigate("/score");
+	}, [isShowScore, navigate]);
 
 	const processedQuestions = processedText(
 		questions[currentQuestionIndex]?.question

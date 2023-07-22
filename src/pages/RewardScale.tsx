@@ -4,10 +4,8 @@ import { resetPoints } from "../redux/slices/pointsSlice";
 import {
 	resetCurrentQuestionIndex,
 	resetQuestions,
-	setIsResetTimer,
-	setIsVisibleNexBtn,
 } from "../redux/slices/questionsSlice";
-import { showModal } from "../redux/slices/modalSlice";
+import { showScore } from "../redux/slices/scoreSlice";
 import { rewardsList } from "../constants/rewards";
 import { playGameSound } from "../helpers/soundsCommands";
 
@@ -22,10 +20,8 @@ const RewardScale = () => {
 	const handlePlayAgain = () => {
 		dispatch(resetPoints());
 		dispatch(resetQuestions());
-		dispatch(showModal(false));
-		dispatch(setIsResetTimer(true));
+		dispatch(showScore(false));
 		dispatch(resetCurrentQuestionIndex());
-		dispatch(setIsVisibleNexBtn(false));
 		navigate("/start-game");
 		isVolumeActive && playGameSound();
 	};

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { playWrongAnswerSound, stopGameSound } from "../helpers/soundsCommands";
 import { useAppSelector } from "../redux/store";
 
-const Timer = ({ isReset }: { isReset: boolean }) => {
+const Timer = () => {
 	const navigate = useNavigate();
 	const isVolumeActive = useAppSelector(
 		(state) => state.questions.isVolumeActive
@@ -19,12 +19,6 @@ const Timer = ({ isReset }: { isReset: boolean }) => {
 			return () => clearInterval(timer);
 		}
 	}, [seconds]);
-
-	useEffect(() => {
-		if (isReset) {
-			setSeconds(60);
-		}
-	}, [isReset]);
 
 	const radius = 35;
 	const circumference = 2 * Math.PI * radius;
