@@ -1,17 +1,13 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { resetPoints } from "../redux/slices/pointsSlice";
-import {
-	resetCurrentQuestionIndex,
-	resetQuestions,
-} from "../redux/slices/questionsSlice";
+import { resetCurrentQuestionIndex } from "../redux/slices/questionsSlice";
 import { showScore } from "../redux/slices/scoreSlice";
 import { rewardsList } from "../constants/rewards";
 import { playGameSound } from "../helpers/soundsCommands";
 
 const RewardScale = () => {
 	const dispatch = useAppDispatch();
-	const navigate = useNavigate();
 	const points = useAppSelector((state: RootState) => state.points.points);
 	const isVolumeActive = useAppSelector(
 		(state) => state.questions.isVolumeActive
@@ -19,10 +15,8 @@ const RewardScale = () => {
 
 	const handlePlayAgain = () => {
 		dispatch(resetPoints());
-		dispatch(resetQuestions());
 		dispatch(showScore(false));
 		dispatch(resetCurrentQuestionIndex());
-		navigate("/start-game");
 		isVolumeActive && playGameSound();
 	};
 
@@ -63,7 +57,7 @@ const RewardScale = () => {
 				</div>
 				<div className="d-flex justify-content-center">
 					<Link
-						to={"/start-game"}
+						to={"/"}
 						type="button"
 						className="btn btn-dark rounded-5 p-2 text-decoration-none col-4 col-sm-3"
 						onClick={handlePlayAgain}

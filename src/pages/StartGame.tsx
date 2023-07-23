@@ -1,7 +1,6 @@
 import { FC, useEffect } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import {
-	getQuestions,
 	setCurrentQuestionIndex,
 	setIsVisibleNexBtn,
 	setIsVolumeActive,
@@ -19,18 +18,9 @@ import {
 
 const StartGame: FC = () => {
 	const dispatch = useAppDispatch();
-	const { questions, isLoading, isVisibleNexBtn, isVolumeActive } =
-		useAppSelector((state: RootState) => state.questions);
-
-	useEffect(() => {
-		if (
-			questions.length <= 0 ||
-			questions === undefined ||
-			questions === null
-		) {
-			void dispatch(getQuestions());
-		}
-	}, [dispatch, questions]);
+	const { isLoading, isVisibleNexBtn, isVolumeActive } = useAppSelector(
+		(state: RootState) => state.questions
+	);
 
 	useEffect(() => {
 		isVolumeActive ? playGameSound() : stopGameSound();
