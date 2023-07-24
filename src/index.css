@@ -3,9 +3,16 @@
   padding: 0;
 }
 
-.home-page, .game-page, .reward-page {
+.home-page, .reward-page {
   min-height: 100vh;
   background-color: rgb(98, 31, 98);
+}
+
+.game-page, .reward-page {
+  background-image: url(./assets/images/background.jpg);
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
 }
 
 .blinking-class {
