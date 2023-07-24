@@ -1,4 +1,4 @@
-@charset "UTF-8";*{margin:0;padding:0}.home-page,.reward-page{min-height:100vh;background-color:#621f62}.game-page,.reward-page{background-image:url(/milionaire-game-app/assets/background-5425e970.jpg);background-size:cover;background-position:center;min-height:100vh}.blinking-class{animation:blink-animation 1s infinite}@keyframes blink-animation{0%{opacity:0}50%{opacity:.5}to{opacity:1}}.question-state-container{height:100px}/*!
+@charset "UTF-8";*{margin:0;padding:0}.home-page,.game-page,.reward-page{background-image:url(/milionaire-game-app/assets/background-5425e970.jpg);background-size:cover;background-position:center;min-height:100vh}.blinking-class{animation:blink-animation 1s infinite}@keyframes blink-animation{0%{opacity:0}50%{opacity:.5}to{opacity:1}}.question-state-container{height:100px}.disabled-btn{pointer-events:none;cursor:not-allowed}.opacity{-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px)}/*!
 * Bootstrap  v5.3.0 (https://getbootstrap.com/)
 * Copyright 2011-2023 The Bootstrap Authors
 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
