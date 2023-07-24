@@ -48,6 +48,8 @@ const Home: FC = () => {
 
 		navigate("/start-game");
 	};
+	
+	const optionsClassName = "d-flex justify-content-center rounded-5 bg-dark col-5 col-sm-4 p-2";
 
 	return (
 		<div className="home-page">
@@ -62,27 +64,31 @@ const Home: FC = () => {
 			<form onSubmit={onSubmitHandler}>
 				<div className="d-flex align-items-center flex-column justify-content-center">
 					<h4 className="text-light pt-3">Category:</h4>
-					<select
-						className="rounded-5 btn btn-dark p-3 col-5 col-sm-4"
-						defaultValue={questionsCategory}
-						onChange={handleCategorySelect}
-					>
-						{Object.values(categoriesTypes).map(
-							(category, index) => (
-								<option key={index}>{category}</option>
-							)
-						)}
-					</select>
-					<h4 className="text-light  pt-3">Difficulty:</h4>
-					<select
-						className="rounded-5 btn btn-dark p-3 col-5 col-sm-4"
-						defaultValue={questionsDifficulty}
-						onChange={handleDifficultySelect}
-					>
-						{difficultiesTypes.map((difficulty, index) => (
-							<option key={index}>{difficulty}</option>
-						))}
-					</select>
+					<div className={optionsClassName}>
+						<select
+							className="btn btn-dark"
+							defaultValue={questionsCategory}
+							onChange={handleCategorySelect}
+						>
+							{Object.values(categoriesTypes).map(
+								(category, index) => (
+									<option key={index}>{category}</option>
+								)
+							)}
+						</select>
+					</div>
+					<h4 className="text-light pt-3">Difficulty:</h4>
+					<div className={optionsClassName}>
+						<select
+							className="btn btn-dark"
+							defaultValue={questionsDifficulty}
+							onChange={handleDifficultySelect}
+						>
+							{difficultiesTypes.map((difficulty, index) => (
+								<option key={index}>{difficulty}</option>
+							))}
+						</select>
+					</div>
 					<input
 						type="submit"
 						value="Start Game"

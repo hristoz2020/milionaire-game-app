@@ -1,7 +1,7 @@
 type CategoriesTypes = { [category: string]: string };
 
 export const categoriesTypes: CategoriesTypes = {
-	any: "Any Category",
+	0: "Any Category",
 	21: "Sports",
 	22: "Geography",
 	23: "History",
