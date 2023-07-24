@@ -7,4 +7,6 @@ export const processedText = (text: string) => {
 		.replace(/&rsquo;/g, "`")
 		.replace(/&shy;/g, "-")
 		.replace(/&Uuml;/g, "ü")
+		.replace(/&deg;/g, "°")
+		.replace(/&ocirc;/g, "ô");
 };

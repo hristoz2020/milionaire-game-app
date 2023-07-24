@@ -7,6 +7,7 @@ import {
 	TYPE_ANSWERS,
 } from "../../services/config";
 import { categoriesTypes } from "../../constants/selectedOptions";
+import { getKeyByValue } from "../../helpers/objectManipulation";
 
 interface QuestionsState {
 	responseQuestions: Response_code;
@@ -18,6 +19,7 @@ interface QuestionsState {
 	isVolumeActive: boolean;
 	questionsCategory: string;
 	questionsDifficulty: string;
+	isShouldTimerStopped: boolean;
 }
 
 const initialState: QuestionsState = {
@@ -30,6 +32,7 @@ const initialState: QuestionsState = {
 	isVolumeActive: true,
 	questionsCategory: "Any Category",
 	questionsDifficulty: "Easy",
+	isShouldTimerStopped: false,
 };
 
 export const getQuestions = createAsyncThunk(
@@ -41,20 +44,13 @@ export const getQuestions = createAsyncThunk(
 		category: string;
 		difficulty: string;
 	}) => {
-		function getObjectKey<T extends string>(
-			obj: Record<T, string>,
-			value: string
-		): T | null {
-			const foundKey = Object.keys(obj).find(
-				(key) => obj[key as T] === value
-			) as T | undefined;
-			return foundKey ?? null;
-		}
-
 		let categoryPath: string | number = "";
 		if (category !== "Any Category") {
 			const categoryString = String(category);
-			const foundCategory = getObjectKey(categoriesTypes, categoryString);
+			const foundCategory = getKeyByValue(
+				categoriesTypes,
+				categoryString
+			);
 			if (foundCategory !== null) {
 				categoryPath = `${CATEGORY}${foundCategory}`;
 			} else {
@@ -87,7 +83,7 @@ const questionsSlice = createSlice({
 		setSelectedOption: (state, action: PayloadAction<string | null>) => {
 			state.selectedOption = action.payload;
 		},
-		setIsVisibleNexBtn: (state, action: PayloadAction<boolean>) => {
+		setIsNextBtnVisible: (state, action: PayloadAction<boolean>) => {
 			state.isVisibleNexBtn = action.payload;
 		},
 		setIsVolumeActive: (state, action: PayloadAction<boolean>) => {
@@ -98,6 +94,9 @@ const questionsSlice = createSlice({
 		},
 		setQuestionsDifficulty: (state, action: PayloadAction<string>) => {
 			state.questionsDifficulty = action.payload;
+		},
+		setIsShouldTimerStopped: (state, action: PayloadAction<boolean>) => {
+			state.isShouldTimerStopped = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -122,9 +121,10 @@ export const {
 	setCurrentQuestionIndex,
 	resetCurrentQuestionIndex,
 	setSelectedOption,
-	setIsVisibleNexBtn,
+	setIsNextBtnVisible,
 	setIsVolumeActive,
 	setQuestionsCategory,
 	setQuestionsDifficulty,
+	setIsShouldTimerStopped
 } = questionsSlice.actions;
 export default questionsSlice.reducer;

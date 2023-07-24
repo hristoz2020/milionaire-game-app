@@ -5,26 +5,26 @@ import { useAppSelector } from "../redux/store";
 
 const Timer = () => {
 	const navigate = useNavigate();
-	const isVolumeActive = useAppSelector(
-		(state) => state.questions.isVolumeActive
+	const { isVolumeActive, isShouldTimerStopped } = useAppSelector(
+		(state) => state.questions
 	);
 	const [seconds, setSeconds] = useState(60);
 
 	useEffect(() => {
-		if (seconds > 0) {
+		if (seconds > 0 && !isShouldTimerStopped) {
 			const timer = setInterval(() => {
 				setSeconds((prevSeconds) => prevSeconds - 1);
 			}, 1000);
 
 			return () => clearInterval(timer);
 		}
-	}, [seconds]);
+	}, [seconds, isShouldTimerStopped]);
 
 	const radius = 35;
 	const circumference = 2 * Math.PI * radius;
 	const strokeDashOffset = circumference * (1 - seconds / 60);
 
-	if (seconds === 0) {
+	if (seconds === 0 && isShouldTimerStopped) {
 		setTimeout(() => {
 			navigate("/score");
 			setSeconds(60);

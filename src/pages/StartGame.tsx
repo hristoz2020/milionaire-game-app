@@ -2,7 +2,8 @@ import { FC, useEffect } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import {
 	setCurrentQuestionIndex,
-	setIsVisibleNexBtn,
+	setIsNextBtnVisible,
+	setIsShouldTimerStopped,
 	setIsVolumeActive,
 	setSelectedOption,
 } from "../redux/slices/questionsSlice";
@@ -29,20 +30,16 @@ const StartGame: FC = () => {
 	const handleNextQuestion = () => {
 		dispatch(setCurrentQuestionIndex());
 		dispatch(setSelectedOption(null));
-		dispatch(setIsVisibleNexBtn(false));
+		dispatch(setIsNextBtnVisible(false));
+		dispatch(setIsShouldTimerStopped(false));
 
 		isVolumeActive && stopCorrectAnswerSound();
 		isVolumeActive && playGameSound();
 	};
 
 	const handleSound = () => {
-		if (isVolumeActive) {
-			stopGameSound();
-			dispatch(setIsVolumeActive(false));
-		} else {
-			playGameSound();
-			dispatch(setIsVolumeActive(true));
-		}
+		isVolumeActive ? stopGameSound() : playGameSound();
+		dispatch(setIsVolumeActive(!isVolumeActive));
 	};
 
 	const handleSoundIcon = isVolumeActive

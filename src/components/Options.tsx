@@ -4,7 +4,8 @@ import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { showScore } from "../redux/slices/scoreSlice";
 import { addPoint } from "../redux/slices/pointsSlice";
 import {
-	setIsVisibleNexBtn,
+	setIsNextBtnVisible,
+	setIsShouldTimerStopped,
 	setSelectedOption,
 } from "../redux/slices/questionsSlice";
 import {
@@ -31,7 +32,7 @@ const Options: FC = () => {
 
 	useEffect(() => {
 		if (points === 15) {
-			dispatch(setIsVisibleNexBtn(false));
+			dispatch(setIsNextBtnVisible(false));
 			setTimeout(() => {
 				dispatch(showScore(true));
 			}, 2000);
@@ -59,6 +60,7 @@ const Options: FC = () => {
 
 	const handleSelectOption = (option: string) => {
 		dispatch(setSelectedOption(option));
+		dispatch(setIsShouldTimerStopped(true));
 		setCurrentBtnClass({
 			backgroundSuccess: "",
 			backgroundDanger: "",
@@ -90,10 +92,15 @@ const Options: FC = () => {
 				});
 				isVolumeActive && stopGameSound();
 				isVolumeActive && playCorrectAnswerSound();
-				dispatch(setIsVisibleNexBtn(true));
+				dispatch(setIsNextBtnVisible(true));
 			}
 		}, 3000);
 	};
+
+	const optionClassName = `border-dark rounded-3 col-md-6 col-sm-12 col-12 p-3 mt-1 ${
+		isDisabledBtn ? "disabled-btn" : ""
+	}
+`;
 
 	return (
 		<div className="d-flex flex-wrap">
@@ -104,7 +111,7 @@ const Options: FC = () => {
 				return (
 					<button
 						key={index}
-						className={`border-dark rounded-3 col-md-6 col-sm-12 col-12 p-3 mt-1 ${
+						className={`${optionClassName} ${
 							checkOptions ? currentBtnClass.blinkingClass : ""
 						} ${
 							option ===
@@ -117,9 +124,7 @@ const Options: FC = () => {
 							selectedOption
 								? currentBtnClass.backgroundDanger
 								: ""
-						} 
-                    `}
-						disabled={isDisabledBtn}
+						}`}
 						onClick={() => handleSelectOption(option)}
 					>
 						{processedAnswer}

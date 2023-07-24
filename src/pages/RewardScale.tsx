@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { resetPoints } from "../redux/slices/pointsSlice";
-import { resetCurrentQuestionIndex } from "../redux/slices/questionsSlice";
+import {
+	resetCurrentQuestionIndex,
+	setIsShouldTimerStopped,
+} from "../redux/slices/questionsSlice";
 import { showScore } from "../redux/slices/scoreSlice";
 import { rewardsList } from "../constants/rewards";
 import { playGameSound } from "../helpers/soundsCommands";
@@ -17,54 +20,54 @@ const RewardScale = () => {
 		dispatch(resetPoints());
 		dispatch(showScore(false));
 		dispatch(resetCurrentQuestionIndex());
+		dispatch(setIsShouldTimerStopped(false));
 		isVolumeActive && playGameSound();
 	};
 
 	return (
 		<div className="reward-page">
-			<div className="">
-				<div className="d-flex justify-content-center align-items-center flex-column">
-					<div className="mt-4">
-						{points >= 0 && points < 15 && (
-							<div className="text-center text-light">
-								<h1>End of the game!</h1>
-								<h3>Submitted wrong answer or timed out.</h3>
-								<h4>Answered questions : {points}</h4>
-							</div>
-						)}
-						{points === 15 && (
-							<div className="text-center text-light">
-								<h1>Congratulations, you won 100 000!</h1>
-								<h3>
-									You are answered {points} questions
-									correctly!
-								</h3>
-							</div>
-						)}
-					</div>
-					<ul className="list-unstyled shadow-lg rounded-3 p-4 px-5 mt-5">
-						{rewardsList.map((reward) => (
-							<li
-								className={`rounded-3 text-left text-danger text-light px-2 m-auto ${
-									reward.place === points ? "bg-dark" : ""
-								}`}
-								key={reward.id}
-							>
-								{`${reward.place}:  ${reward.price}`}
-							</li>
-						))}
-					</ul>
+			<div className="d-flex justify-content-center align-items-center flex-column">
+				<div className="mt-4">
+					{points >= 0 && points < 15 && (
+						<div className="text-center text-light">
+							<h1>End of the game!</h1>
+							<h3>Submitted wrong answer or timed out.</h3>
+							<h4>Answered questions : {points}</h4>
+						</div>
+					)}
+					{points === 15 && (
+						<div className="text-center text-light">
+							<h1>Congratulations, you won 100 000!</h1>
+							<h3>
+								You are answered {points} questions correctly!
+							</h3>
+						</div>
+					)}
 				</div>
-				<div className="d-flex justify-content-center">
-					<Link
-						to={"/"}
-						type="button"
-						className="btn btn-dark rounded-5 p-2 text-decoration-none col-4 col-sm-3"
-						onClick={handlePlayAgain}
-					>
-						Play Again
-					</Link>
-				</div>
+				<ul className="list-unstyled opacity border border-secondary rounded-3 p-4 px-5 mt-5">
+					{rewardsList.map((reward) => (
+						<li
+							className={`rounded-3 text-left text-danger text-light px-2 m-auto ${
+								reward.place === points
+									? "bg-light text-black"
+									: ""
+							}`}
+							key={reward.id}
+						>
+							{`${reward.place}:  ${reward.price}`}
+						</li>
+					))}
+				</ul>
+			</div>
+			<div className="d-flex justify-content-center">
+				<Link
+					to={"/"}
+					type="button"
+					className="btn btn-dark rounded-5 p-2 text-decoration-none col-4 col-sm-3"
+					onClick={handlePlayAgain}
+				>
+					Play Again
+				</Link>
 			</div>
 		</div>
 	);
