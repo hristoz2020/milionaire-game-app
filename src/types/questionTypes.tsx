@@ -7,7 +7,7 @@ export type Question = {
 	incorrect_answers: string[];
 };
 
-export type Response_code = {
+export interface Response_code {
 	status: number;
 	results: Question[];
 }

@@ -19,19 +19,14 @@ const Options: FC = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
+	const [isDisabledBtn, setIsDisabledBtn] = useState<boolean>(false);
 	const [currentBtnClass, setCurrentBtnClass] = useState({
 		backgroundSuccess: "",
 		backgroundDanger: "",
 		blinkingClass: "",
 	});
-
-	const {
-		questions,
-		currentQuestionIndex,
-		selectedOption,
-		isVisibleNexBtn,
-		isVolumeActive,
-	} = useAppSelector((state: RootState) => state.questions);
+	const { questions, currentQuestionIndex, selectedOption, isVolumeActive } =
+		useAppSelector((state: RootState) => state.questions);
 	const points = useAppSelector((state: RootState) => state.points.points);
 
 	useEffect(() => {
@@ -42,6 +37,10 @@ const Options: FC = () => {
 			}, 2000);
 		}
 	}, [points, dispatch, currentQuestionIndex]);
+
+	useEffect(() => {
+		setIsDisabledBtn(false);
+	}, [currentQuestionIndex]);
 
 	const options: string[] = useMemo(() => {
 		const shuffledOptions = [
@@ -65,6 +64,7 @@ const Options: FC = () => {
 			backgroundDanger: "",
 			blinkingClass: "blinking-class",
 		});
+		setIsDisabledBtn(true);
 
 		setTimeout(() => {
 			if (option !== questions[currentQuestionIndex].correct_answer) {
@@ -119,7 +119,7 @@ const Options: FC = () => {
 								: ""
 						} 
                     `}
-						disabled={isVisibleNexBtn || points === 15}
+						disabled={isDisabledBtn}
 						onClick={() => handleSelectOption(option)}
 					>
 						{processedAnswer}
