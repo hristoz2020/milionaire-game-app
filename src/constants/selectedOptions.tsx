@@ -9,3 +9,4 @@ export const categoriesTypes: CategoriesTypes = {
 };
 
 export const difficultiesTypes: string[] = ["Easy", "Medium", "Hard"];
+export const answerTypes: string[] = ["A: ", "B: ", "C: ", "D: "];

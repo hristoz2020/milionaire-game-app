@@ -45,18 +45,20 @@ const RewardScale = () => {
 					)}
 				</div>
 				<ul className="list-unstyled opacity border border-secondary rounded-3 p-4 px-5 mt-5">
-					{rewardsList.map((reward) => (
-						<li
-							className={`rounded-3 text-left text-danger text-light px-2 m-auto ${
-								reward.place === points
-									? "bg-light text-black"
-									: ""
-							}`}
-							key={reward.id}
-						>
-							{`${reward.place}:  ${reward.price}`}
-						</li>
-					))}
+					{rewardsList.map((reward) => {
+						const currentPlace =
+							reward.place === points
+								? "bg-light text-black"
+								: "";
+						return (
+							<li
+								className={`${reward.className} ${currentPlace}`}
+								key={reward.id}
+							>
+								{`${reward.place}:  ${reward.price}`}
+							</li>
+						);
+					})}
 				</ul>
 			</div>
 			<div className="d-flex justify-content-center">

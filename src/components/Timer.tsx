@@ -24,7 +24,7 @@ const Timer = () => {
 	const circumference = 2 * Math.PI * radius;
 	const strokeDashOffset = circumference * (1 - seconds / 60);
 
-	if (seconds === 0 && isShouldTimerStopped) {
+	if (seconds === 0) {
 		setTimeout(() => {
 			navigate("/score");
 			setSeconds(60);

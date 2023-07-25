@@ -15,6 +15,7 @@ import {
 	stopWrongAnswerSound,
 } from "../helpers/soundsCommands";
 import { processedText } from "../helpers/processedText";
+import { answerTypes } from "../constants/selectedOptions";
 
 const Options: FC = () => {
 	const dispatch = useAppDispatch();
@@ -97,7 +98,7 @@ const Options: FC = () => {
 		}, 3000);
 	};
 
-	const optionClassName = `border-dark rounded-3 col-md-6 col-sm-12 col-12 p-3 mt-1 ${
+	const optionClassName = `d-flex rounded-3 col-md-6 col-sm-12 col-12 p-3 mt-1 ${
 		isDisabledBtn ? "disabled-btn" : ""
 	}
 `;
@@ -127,6 +128,7 @@ const Options: FC = () => {
 						}`}
 						onClick={() => handleSelectOption(option)}
 					>
+						{answerTypes[index]}
 						{processedAnswer}
 					</button>
 				);
