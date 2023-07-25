@@ -4,6 +4,7 @@ import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { showScore } from "../redux/slices/scoreSlice";
 import { addPoint } from "../redux/slices/pointsSlice";
 import {
+	setIsDisabledAnswersBtns,
 	setIsNextBtnVisible,
 	setIsShouldTimerStopped,
 	setSelectedOption,
@@ -21,15 +22,17 @@ const Options: FC = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
-	const [isDisabledBtn, setIsDisabledBtn] = useState<boolean>(false);
 	const [currentBtnClass, setCurrentBtnClass] = useState({
 		backgroundSuccess: "",
 		backgroundDanger: "",
 		blinkingClass: "",
 	});
-	const { questions, currentQuestionIndex, selectedOption, isVolumeActive } =
+	const { questions, currentQuestionIndex, selectedOption, isVolumeActive, isDisabledAnswersBtns } =
 		useAppSelector((state: RootState) => state.questions);
 	const points = useAppSelector((state: RootState) => state.points.points);
+	const isFiftyFiftyClicked = useAppSelector(
+		(state: RootState) => state.helpers.isFiftyFiftyClicked
+	);
 
 	useEffect(() => {
 		if (points === 15) {
@@ -41,8 +44,8 @@ const Options: FC = () => {
 	}, [points, dispatch, currentQuestionIndex]);
 
 	useEffect(() => {
-		setIsDisabledBtn(false);
-	}, [currentQuestionIndex]);
+		dispatch(setIsDisabledAnswersBtns(false));
+	}, [currentQuestionIndex, dispatch]);
 
 	const options: string[] = useMemo(() => {
 		const shuffledOptions = [
@@ -67,7 +70,7 @@ const Options: FC = () => {
 			backgroundDanger: "",
 			blinkingClass: "blinking-class",
 		});
-		setIsDisabledBtn(true);
+		dispatch(setIsDisabledAnswersBtns(true))
 
 		setTimeout(() => {
 			if (option !== questions[currentQuestionIndex].correct_answer) {
@@ -99,15 +102,21 @@ const Options: FC = () => {
 	};
 
 	const optionClassName = `d-flex rounded-3 col-md-6 col-sm-12 col-12 p-3 mt-1 ${
-		isDisabledBtn ? "disabled-btn" : ""
-	}
-`;
+		isDisabledAnswersBtns ? "disabled-btn" : ""
+	}`;
 
 	return (
 		<div className="d-flex flex-wrap">
 			{options.map((option, index) => {
 				const checkOptions = selectedOption === option;
 				const processedAnswer = processedText(option);
+				const clickedHalfOption = questions[
+					currentQuestionIndex
+				]?.incorrect_answers
+					.slice(0, 2)
+					.includes(option)
+					? "text-light disabled-btn"
+					: "";
 
 				return (
 					<button
@@ -125,7 +134,7 @@ const Options: FC = () => {
 							selectedOption
 								? currentBtnClass.backgroundDanger
 								: ""
-						}`}
+						} ${isFiftyFiftyClicked ? clickedHalfOption : ""}`}
 						onClick={() => handleSelectOption(option)}
 					>
 						{answerTypes[index]}

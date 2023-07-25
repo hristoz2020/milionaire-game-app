@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { playWrongAnswerSound, stopGameSound } from "../helpers/soundsCommands";
-import { useAppSelector } from "../redux/store";
+import { setIsDisabledAnswersBtns } from "../redux/slices/questionsSlice";
+import { useAppDispatch, useAppSelector } from "../redux/store";
 
 const Timer = () => {
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 	const { isVolumeActive, isShouldTimerStopped } = useAppSelector(
 		(state) => state.questions
 	);
@@ -18,20 +20,20 @@ const Timer = () => {
 
 			return () => clearInterval(timer);
 		}
-	}, [seconds, isShouldTimerStopped]);
+		if (seconds === 0) {
+			dispatch(setIsDisabledAnswersBtns(true));
+			setTimeout(() => {
+				navigate("/score");
+				setSeconds(60);
+				isVolumeActive && stopGameSound();
+				isVolumeActive && playWrongAnswerSound();
+			}, 3000);
+		}
+	}, [seconds, isShouldTimerStopped, isVolumeActive, navigate, dispatch]);
 
 	const radius = 35;
 	const circumference = 2 * Math.PI * radius;
 	const strokeDashOffset = circumference * (1 - seconds / 60);
-
-	if (seconds === 0) {
-		setTimeout(() => {
-			navigate("/score");
-			setSeconds(60);
-			isVolumeActive && stopGameSound();
-			isVolumeActive && playWrongAnswerSound();
-		}, 3000);
-	}
 
 	return (
 		<svg width="100" height="100">

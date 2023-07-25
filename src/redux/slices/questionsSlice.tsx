@@ -20,6 +20,7 @@ interface QuestionsState {
 	questionsCategory: string;
 	questionsDifficulty: string;
 	isShouldTimerStopped: boolean;
+	isDisabledAnswersBtns: boolean;
 }
 
 const initialState: QuestionsState = {
@@ -33,6 +34,7 @@ const initialState: QuestionsState = {
 	questionsCategory: "Any Category",
 	questionsDifficulty: "Easy",
 	isShouldTimerStopped: false,
+	isDisabledAnswersBtns: false,
 };
 
 export const getQuestions = createAsyncThunk(
@@ -44,19 +46,18 @@ export const getQuestions = createAsyncThunk(
 		category: string;
 		difficulty: string;
 	}) => {
-		let categoryPath: string | number = "";
+		let categoryPath = "";
 		if (category !== "Any Category") {
 			const categoryString = String(category);
 			const foundCategory = getKeyByValue(
 				categoriesTypes,
 				categoryString
 			);
-			if (foundCategory !== null) {
-				categoryPath = `${CATEGORY}${foundCategory}`;
-			} else {
-				categoryPath = "";
-			}
+			foundCategory !== null
+				? (categoryPath = `${CATEGORY}${foundCategory}`)
+				: (categoryPath = "");
 		}
+
 		const response = await fetch(
 			`${BASE_URL}${categoryPath}${DIFFICULTY}${difficulty.toLocaleLowerCase()}${TYPE_ANSWERS}`,
 			{
@@ -98,6 +99,9 @@ const questionsSlice = createSlice({
 		setIsShouldTimerStopped: (state, action: PayloadAction<boolean>) => {
 			state.isShouldTimerStopped = action.payload;
 		},
+		setIsDisabledAnswersBtns: (state, action: PayloadAction<boolean>) => {
+			state.isDisabledAnswersBtns = action.payload;
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -125,6 +129,7 @@ export const {
 	setIsVolumeActive,
 	setQuestionsCategory,
 	setQuestionsDifficulty,
-	setIsShouldTimerStopped
+	setIsShouldTimerStopped,
+	setIsDisabledAnswersBtns,
 } = questionsSlice.actions;
 export default questionsSlice.reducer;

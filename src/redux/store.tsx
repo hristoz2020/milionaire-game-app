@@ -14,6 +14,7 @@ import storage from "redux-persist/lib/storage";
 import scoreSlice from "./slices/scoreSlice";
 import pointsSlice from "./slices/pointsSlice";
 import questionsSlice from "./slices/questionsSlice";
+import helpersSlice from "./slices/helpersSlice";
 
 const persistConfig = {
 	key: "root",
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
 	questions: questionsSlice,
 	points: pointsSlice,
 	score: scoreSlice,
+	helpers: helpersSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

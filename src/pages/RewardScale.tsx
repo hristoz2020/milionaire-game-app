@@ -4,10 +4,12 @@ import { resetPoints } from "../redux/slices/pointsSlice";
 import {
 	resetCurrentQuestionIndex,
 	setIsShouldTimerStopped,
+	setSelectedOption,
 } from "../redux/slices/questionsSlice";
 import { showScore } from "../redux/slices/scoreSlice";
 import { rewardsList } from "../constants/rewards";
 import { playGameSound } from "../helpers/soundsCommands";
+import { setIsFiftyFiftyClicked } from "../redux/slices/helpersSlice";
 
 const RewardScale = () => {
 	const dispatch = useAppDispatch();
@@ -20,7 +22,9 @@ const RewardScale = () => {
 		dispatch(resetPoints());
 		dispatch(showScore(false));
 		dispatch(resetCurrentQuestionIndex());
+		dispatch(setSelectedOption(null));
 		dispatch(setIsShouldTimerStopped(false));
+		dispatch(setIsFiftyFiftyClicked(false));
 		isVolumeActive && playGameSound();
 	};
 

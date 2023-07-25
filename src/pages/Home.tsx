@@ -13,6 +13,7 @@ import {
 	setIsNextBtnVisible,
 	setQuestionsCategory,
 	setQuestionsDifficulty,
+	setSelectedOption,
 } from "../redux/slices/questionsSlice";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 
@@ -27,7 +28,8 @@ const Home: FC = () => {
 		stopGameSound();
 		dispatch(resetCurrentQuestionIndex());
 		dispatch(resetPoints());
-		dispatch(setIsNextBtnVisible(false))
+		dispatch(setSelectedOption(null));
+		dispatch(setIsNextBtnVisible(false));
 	}, [dispatch]);
 
 	const handleCategorySelect = (

@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import {
 	setCurrentQuestionIndex,
@@ -16,12 +16,14 @@ import {
 	stopCorrectAnswerSound,
 	stopGameSound,
 } from "../helpers/soundsCommands";
+import { setIsFiftyFiftyClicked } from "../redux/slices/helpersSlice";
 
 const StartGame: FC = () => {
 	const dispatch = useAppDispatch();
 	const { isLoading, isVisibleNexBtn, isVolumeActive } = useAppSelector(
 		(state: RootState) => state.questions
 	);
+	const [isHelperUsed, setIsHelperUsed] = useState<boolean>(false);
 
 	useEffect(() => {
 		isVolumeActive ? playGameSound() : stopGameSound();
@@ -32,6 +34,7 @@ const StartGame: FC = () => {
 		dispatch(setSelectedOption(null));
 		dispatch(setIsNextBtnVisible(false));
 		dispatch(setIsShouldTimerStopped(false));
+		dispatch(setIsFiftyFiftyClicked(false));
 
 		isVolumeActive && stopCorrectAnswerSound();
 		isVolumeActive && playGameSound();
@@ -46,6 +49,11 @@ const StartGame: FC = () => {
 		? "fa-volume-high"
 		: "fa-volume-xmark";
 
+	const handleFiftyFifty = () => {
+		dispatch(setIsFiftyFiftyClicked(true));
+		setIsHelperUsed(true);
+	};
+
 	return (
 		<div className="game-page">
 			<div className="d-flex flex-column align-items-center justify-content-center mb-1">
@@ -59,6 +67,13 @@ const StartGame: FC = () => {
 					onClick={() => handleSound()}
 				>
 					<i className={`fa-solid ${handleSoundIcon}`}></i>
+				</button>
+				<button
+					className="btn btn-dark rounded-circle p-3 border-primary text-warning"
+					onClick={handleFiftyFifty}
+					disabled={isHelperUsed}
+				>
+					50:50
 				</button>
 				<div className="question-state-container d-flex align-items-center">
 					{!isVisibleNexBtn && !isLoading && <Timer />}
