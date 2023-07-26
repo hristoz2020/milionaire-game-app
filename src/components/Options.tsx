@@ -27,11 +27,16 @@ const Options: FC = () => {
 		backgroundDanger: "",
 		blinkingClass: "",
 	});
-	const { questions, currentQuestionIndex, selectedOption, isVolumeActive, isDisabledAnswersBtns } =
-		useAppSelector((state: RootState) => state.questions);
+	const {
+		questions,
+		currentQuestionIndex,
+		selectedOption,
+		isVolumeActive,
+		isDisabledAnswersBtns,
+	} = useAppSelector((state: RootState) => state.questions);
 	const points = useAppSelector((state: RootState) => state.points.points);
-	const isFiftyFiftyClicked = useAppSelector(
-		(state: RootState) => state.helpers.isFiftyFiftyClicked
+	const { isFiftyFiftyClicked } = useAppSelector(
+		(state: RootState) => state.jokers
 	);
 
 	useEffect(() => {
@@ -70,7 +75,7 @@ const Options: FC = () => {
 			backgroundDanger: "",
 			blinkingClass: "blinking-class",
 		});
-		dispatch(setIsDisabledAnswersBtns(true))
+		dispatch(setIsDisabledAnswersBtns(true));
 
 		setTimeout(() => {
 			if (option !== questions[currentQuestionIndex].correct_answer) {

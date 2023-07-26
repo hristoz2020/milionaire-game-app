@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import {
 	setCurrentQuestionIndex,
@@ -17,14 +17,19 @@ import {
 	stopCorrectAnswerSound,
 	stopGameSound,
 } from "../helpers/soundsCommands";
-import { setIsFiftyFiftyClicked } from "../redux/slices/helpersSlice";
+import {
+	setIsFiftyFiftyClicked,
+	setIsFiftyFiftyUsed,
+} from "../redux/slices/jokersSlice";
 
 const StartGame: FC = () => {
 	const dispatch = useAppDispatch();
 	const { isLoading, isVisibleNexBtn, isVolumeActive } = useAppSelector(
 		(state: RootState) => state.questions
 	);
-	const [isHelperUsed, setIsHelperUsed] = useState<boolean>(false);
+	const isFiftyFiftyUsed = useAppSelector(
+		(state: RootState) => state.jokers.isFiftyFiftyUsed
+	);
 
 	useEffect(() => {
 		isVolumeActive ? playGameSound() : stopGameSound();
@@ -54,7 +59,7 @@ const StartGame: FC = () => {
 		isVolumeActive && playFiftyFiftySound();
 		setTimeout(() => {
 			dispatch(setIsFiftyFiftyClicked(true));
-			setIsHelperUsed(true);
+			dispatch(setIsFiftyFiftyUsed(true));
 		}, 1400);
 	};
 
@@ -75,7 +80,7 @@ const StartGame: FC = () => {
 				<button
 					className="btn btn-dark rounded-circle p-3 border-primary text-warning"
 					onClick={handleFiftyFifty}
-					disabled={isHelperUsed}
+					disabled={isFiftyFiftyUsed}
 				>
 					50:50
 				</button>

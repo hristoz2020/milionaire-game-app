@@ -9,7 +9,7 @@ import {
 import { showScore } from "../redux/slices/scoreSlice";
 import { rewardsList } from "../constants/rewards";
 import { playGameSound } from "../helpers/soundsCommands";
-import { setIsFiftyFiftyClicked } from "../redux/slices/helpersSlice";
+import { setIsFiftyFiftyClicked, setIsFiftyFiftyUsed } from "../redux/slices/jokersSlice";
 
 const RewardScale = () => {
 	const dispatch = useAppDispatch();
@@ -25,6 +25,7 @@ const RewardScale = () => {
 		dispatch(setSelectedOption(null));
 		dispatch(setIsShouldTimerStopped(false));
 		dispatch(setIsFiftyFiftyClicked(false));
+		dispatch(setIsFiftyFiftyUsed(false));
 		isVolumeActive && playGameSound();
 	};
 

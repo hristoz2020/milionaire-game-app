@@ -14,19 +14,19 @@ import storage from "redux-persist/lib/storage";
 import scoreSlice from "./slices/scoreSlice";
 import pointsSlice from "./slices/pointsSlice";
 import questionsSlice from "./slices/questionsSlice";
-import helpersSlice from "./slices/helpersSlice";
+import jokersSlice from "./slices/jokersSlice";
 
 const persistConfig = {
 	key: "root",
 	storage,
-	whitelist: ["questions"],
+	whitelist: ["questions", "jokers", "points"],
 };
 
 const rootReducer = combineReducers({
 	questions: questionsSlice,
 	points: pointsSlice,
 	score: scoreSlice,
-	helpers: helpersSlice,
+	jokers: jokersSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
