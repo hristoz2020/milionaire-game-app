@@ -101,7 +101,7 @@ const Options: FC = () => {
 		}, 3000);
 	};
 
-	const optionClassName = `d-flex rounded-3 col-md-6 col-sm-12 col-12 p-3 mt-1 ${
+	const optionClassName = `d-flex btn btn-light rounded-5 border-2 border-dark col-md-6 col-sm-12 col-12 p-3 mt-1 ${
 		isDisabledAnswersBtns ? "disabled-btn" : ""
 	}`;
 
