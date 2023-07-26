@@ -12,6 +12,7 @@ import Loader from "../components/Loader";
 import Timer from "../components/Timer";
 import image from "../assets/images/image.webp";
 import {
+	playFiftyFiftySound,
 	playGameSound,
 	stopCorrectAnswerSound,
 	stopGameSound,
@@ -50,8 +51,11 @@ const StartGame: FC = () => {
 		: "fa-volume-xmark";
 
 	const handleFiftyFifty = () => {
-		dispatch(setIsFiftyFiftyClicked(true));
-		setIsHelperUsed(true);
+		isVolumeActive && playFiftyFiftySound();
+		setTimeout(() => {
+			dispatch(setIsFiftyFiftyClicked(true));
+			setIsHelperUsed(true);
+		}, 1400);
 	};
 
 	return (

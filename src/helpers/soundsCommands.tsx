@@ -1,10 +1,12 @@
 import start from "../assets/sounds/start_game.mp3";
 import wrongAnswer from "../assets/sounds/wrong_answer.mp3";
 import correctAnswer from "../assets/sounds/correct_answer.mp3";
+import fiftyFifty from "../assets/sounds/fifty_fifty.mp3";
 
 const gameSound = new Audio(start);
 const wrongAnswerSound = new Audio(wrongAnswer);
 const correctAnswerSound = new Audio(correctAnswer);
+const fiftyFiftySound = new Audio(fiftyFifty);
 
 export const playGameSound = () => {
 	void gameSound.play();
@@ -31,4 +33,8 @@ export const playCorrectAnswerSound = () => {
 export const stopCorrectAnswerSound = () => {
 	void correctAnswerSound.pause();
 	correctAnswerSound.currentTime = 0;
+};
+
+export const playFiftyFiftySound = () => {
+	void fiftyFiftySound.play();
 };
