@@ -7,28 +7,22 @@ import {
 	setIsVolumeActive,
 	setSelectedOption,
 } from "../redux/slices/questionsSlice";
+import { setIsFiftyFiftyClicked } from "../redux/slices/jokersSlice";
 import QuestionConainer from "../components/QuestionConainer";
 import Loader from "../components/Loader";
 import Timer from "../components/Timer";
 import image from "../assets/images/image.webp";
 import {
-	playFiftyFiftySound,
 	playGameSound,
 	stopCorrectAnswerSound,
 	stopGameSound,
 } from "../helpers/soundsCommands";
-import {
-	setIsFiftyFiftyClicked,
-	setIsFiftyFiftyUsed,
-} from "../redux/slices/jokersSlice";
+import JokersContainer from "../components/jokersContainer";
 
 const StartGame: FC = () => {
 	const dispatch = useAppDispatch();
 	const { isLoading, isVisibleNexBtn, isVolumeActive } = useAppSelector(
 		(state: RootState) => state.questions
-	);
-	const isFiftyFiftyUsed = useAppSelector(
-		(state: RootState) => state.jokers.isFiftyFiftyUsed
 	);
 
 	useEffect(() => {
@@ -55,14 +49,6 @@ const StartGame: FC = () => {
 		? "fa-volume-high"
 		: "fa-volume-xmark";
 
-	const handleFiftyFifty = () => {
-		isVolumeActive && playFiftyFiftySound();
-		setTimeout(() => {
-			dispatch(setIsFiftyFiftyClicked(true));
-			dispatch(setIsFiftyFiftyUsed(true));
-		}, 1400);
-	};
-
 	return (
 		<div className="game-page">
 			<div className="d-flex flex-column align-items-center justify-content-center mb-1">
@@ -77,13 +63,7 @@ const StartGame: FC = () => {
 				>
 					<i className={`fa-solid ${handleSoundIcon}`}></i>
 				</button>
-				<button
-					className="btn btn-dark rounded-circle p-3 border-primary text-warning"
-					onClick={handleFiftyFifty}
-					disabled={isFiftyFiftyUsed}
-				>
-					50:50
-				</button>
+				<JokersContainer />
 				<div className="question-state-container d-flex align-items-center">
 					{!isVisibleNexBtn && !isLoading && <Timer />}
 					<button

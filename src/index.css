@@ -41,3 +41,7 @@
 .opacity {
   backdrop-filter: blur(5px);
 }
+
+.jokersIcon {
+  width: 100px;
+}
