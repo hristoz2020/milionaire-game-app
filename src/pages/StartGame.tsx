@@ -63,7 +63,9 @@ const StartGame: FC = () => {
 				>
 					<i className={`fa-solid ${handleSoundIcon}`}></i>
 				</button>
+
 				<JokersContainer />
+
 				<div className="question-state-container d-flex align-items-center">
 					{!isVisibleNexBtn && !isLoading && <Timer />}
 					<button
