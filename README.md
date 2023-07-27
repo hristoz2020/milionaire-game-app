@@ -22,7 +22,7 @@ Check out the live demo of the game at [Millionaire Game Demo](https://hristoz20
 -   Use Jokers to get help during the game. Jokers available are:
     -   Fifty-Fifty: Eliminate two wrong answers from the options.
     -   Ask the Audience: Request the audience's opinion on the correct answer (Coming soon!).
-    -   Phone a Friend: Get assistance from a friend to answer the question (Coming soon!).
+    -   Call a Friend: Get assistance from a friend to answer the question.
 
 ## Installation and Setup
 
