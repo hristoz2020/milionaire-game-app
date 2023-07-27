@@ -1,4 +1,7 @@
-import { setIsCallAFrendClicked, setIsCallAFrendUsed } from "../redux/slices/jokersSlice";
+import {
+	setIsCallAFrendClicked,
+	setIsCallAFrendUsed,
+} from "../redux/slices/jokersSlice";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 
 const CallAFrendModal = () => {
@@ -34,11 +37,14 @@ const CallAFrendModal = () => {
 							Call to friend
 						</h1>
 					</div>
-					<div className="modal-body">
+					<div className="modal-body text-center">
 						Your friend says: “Are you sure you read the question
 						correctly? Because if you did, you’d know the correct
-						answer is obviously
-						{questions[currentQuestionIndex]?.correct_answer}.”
+						answer is obviously{" "}
+						<span className="border rounded-4  p-1">
+							{questions[currentQuestionIndex]?.correct_answer}
+						</span>
+						."
 					</div>
 					<div className="modal-footer">
 						<button
