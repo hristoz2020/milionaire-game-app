@@ -5,8 +5,8 @@ interface HelpersState {
 	isFiftyFiftyUsed: boolean;
 	isAskTheAudienceClicked: boolean;
 	isAskTheAudienceUsed: boolean;
-	isPhoneAFrendClicked: boolean;
-	isPhoneAFrendUsed: boolean;
+	isCallAFrendClicked: boolean;
+	isCallAFrendUsed: boolean;
 }
 
 const initialState: HelpersState = {
@@ -14,8 +14,8 @@ const initialState: HelpersState = {
 	isFiftyFiftyUsed: false,
 	isAskTheAudienceClicked: false,
 	isAskTheAudienceUsed: false,
-	isPhoneAFrendClicked: false,
-	isPhoneAFrendUsed: false,
+	isCallAFrendClicked: false,
+	isCallAFrendUsed: false,
 };
 
 const jokersSlice = createSlice({
@@ -34,11 +34,11 @@ const jokersSlice = createSlice({
 		setIsAskTheAudienceUsed: (state, action: PayloadAction<boolean>) => {
 			state.isAskTheAudienceUsed = action.payload;
 		},
-		setIsPhoneAFrendClicked: (state, action: PayloadAction<boolean>) => {
-			state.isFiftyFiftyClicked = action.payload;
+		setIsCallAFrendClicked: (state, action: PayloadAction<boolean>) => {
+			state.isCallAFrendClicked = action.payload;
 		},
-		setIsPhoneAFrendUsed: (state, action: PayloadAction<boolean>) => {
-			state.isPhoneAFrendUsed = action.payload;
+		setIsCallAFrendUsed: (state, action: PayloadAction<boolean>) => {
+			state.isCallAFrendUsed = action.payload;
 		},
 	},
 });
@@ -48,7 +48,7 @@ export const {
 	setIsFiftyFiftyUsed,
 	setIsAskTheAudienceClicked,
 	setIsAskTheAudienceUsed,
-	setIsPhoneAFrendClicked,
-	setIsPhoneAFrendUsed,
+	setIsCallAFrendClicked,
+	setIsCallAFrendUsed,
 } = jokersSlice.actions;
 export default jokersSlice.reducer;

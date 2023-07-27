@@ -17,7 +17,7 @@ import {
 	stopCorrectAnswerSound,
 	stopGameSound,
 } from "../helpers/soundsCommands";
-import JokersContainer from "../components/jokersContainer";
+import JokersContainer from "../components/JokersContainer";
 
 const StartGame: FC = () => {
 	const dispatch = useAppDispatch();
