@@ -1,7 +1,7 @@
 import { setIsCallAFrendClicked, setIsCallAFrendUsed } from "../redux/slices/jokersSlice";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 
-const PhoneAFrendModal = () => {
+const CallAFrendModal = () => {
 	const dispatch = useAppDispatch();
 	const { isCallAFrendClicked, isCallAFrendUsed } = useAppSelector(
 		(state: RootState) => state.jokers
@@ -55,4 +55,4 @@ const PhoneAFrendModal = () => {
 		</div>
 	);
 };
-export default PhoneAFrendModal;
+export default CallAFrendModal;

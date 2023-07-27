@@ -6,7 +6,7 @@ import {
 } from "../redux/slices/jokersSlice";
 import { playFiftyFiftySound } from "../helpers/soundsCommands";
 import { jokersList } from "../constants/jokerOptions";
-import PhoneAFrendModal from "./phoneAFrendModal";
+import CallAFrendModal from "./CallAFrendModal";
 
 const JokersContainer = () => {
 	const dispatch = useAppDispatch();
@@ -48,7 +48,7 @@ const JokersContainer = () => {
 
 	return (
 		<div className="d-flex justify-content-center">
-			<PhoneAFrendModal />
+			<CallAFrendModal />
 			{jokersList.map((joker) => {
 				let toggleIcon = "";
 				if (joker.option === "fiftyFifty") {
