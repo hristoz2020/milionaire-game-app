@@ -1,5 +1,6 @@
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import {
+	setIsAskTheAudienceClicked,
 	setIsCallAFrendClicked,
 	setIsFiftyFiftyClicked,
 	setIsFiftyFiftyUsed,
@@ -18,6 +19,7 @@ const JokersContainer = () => {
 		isFiftyFiftyClicked,
 		isCallAFrendUsed,
 		isCallAFrendClicked,
+		isAskTheAudienceClicked,
 		isAskTheAudienceUsed,
 	} = useAppSelector((state: RootState) => state.jokers);
 
@@ -33,8 +35,10 @@ const JokersContainer = () => {
 			}, 1400);
 		}
 		if (joker === "askTheAudience") {
-			//add funcionality
-			window.alert("This functionality is not added! :(");
+			if(isAskTheAudienceClicked) {
+				return;
+			}
+			dispatch(setIsAskTheAudienceClicked(!isAskTheAudienceClicked))
 		}
 		if (joker === "phoneAFrend") {
 			if (isCallAFrendUsed) {

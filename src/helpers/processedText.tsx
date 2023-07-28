@@ -8,5 +8,6 @@ export const processedText = (text: string) => {
 		.replace(/&shy;/g, "-")
 		.replace(/&Uuml;/g, "ü")
 		.replace(/&deg;/g, "°")
-		.replace(/&ocirc;/g, "ô");
+		.replace(/&ocirc;/g, "ô")
+		.replace(/&oacute;/g, "ó")
 };

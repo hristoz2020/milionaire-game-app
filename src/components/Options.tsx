@@ -17,6 +17,7 @@ import {
 } from "../helpers/soundsCommands";
 import { processedText } from "../helpers/processedText";
 import { answerTypes } from "../constants/selectedOptions";
+import ScaleModal from "./ScaleModal";
 
 const Options: FC = () => {
 	const dispatch = useAppDispatch();
@@ -62,7 +63,6 @@ const Options: FC = () => {
 			.sort(() => Math.random() - 0.5);
 		return shuffledOptions;
 	}, [questions, currentQuestionIndex]);
-
 	const checkSelectedWrongOption = questions[
 		currentQuestionIndex
 	]?.incorrect_answers.find((answer) => answer === selectedOption);
@@ -111,43 +111,48 @@ const Options: FC = () => {
 	}`;
 
 	return (
-		<div className="d-flex flex-wrap">
-			{options.map((option, index) => {
-				const checkOptions = selectedOption === option;
-				const processedAnswer = processedText(option);
-				const clickedHalfOption = questions[
-					currentQuestionIndex
-				]?.incorrect_answers
-					.slice(0, 2)
-					.includes(option)
-					? "text-light disabled-btn"
-					: "";
+		<>
+			<ScaleModal options={options} />
+			<div className="d-flex flex-wrap">
+				{options.map((option, index) => {
+					const checkOptions = selectedOption === option;
+					const processedAnswer = processedText(option);
+					const clickedHalfOption = questions[
+						currentQuestionIndex
+					]?.incorrect_answers
+						.slice(0, 2)
+						.includes(option)
+						? "text-light disabled-btn"
+						: "";
 
-				return (
-					<button
-						key={index}
-						className={`${optionClassName} ${
-							checkOptions ? currentBtnClass.blinkingClass : ""
-						} ${
-							option ===
-								questions[currentQuestionIndex]
-									?.correct_answer && selectedOption
-								? currentBtnClass.backgroundSuccess
-								: ""
-						} ${
-							option === checkSelectedWrongOption &&
-							selectedOption
-								? currentBtnClass.backgroundDanger
-								: ""
-						} ${isFiftyFiftyClicked ? clickedHalfOption : ""}`}
-						onClick={() => handleSelectOption(option)}
-					>
-						{answerTypes[index]}
-						{processedAnswer}
-					</button>
-				);
-			})}
-		</div>
+					return (
+						<button
+							key={index}
+							className={`${optionClassName} ${
+								checkOptions
+									? currentBtnClass.blinkingClass
+									: ""
+							} ${
+								option ===
+									questions[currentQuestionIndex]
+										?.correct_answer && selectedOption
+									? currentBtnClass.backgroundSuccess
+									: ""
+							} ${
+								option === checkSelectedWrongOption &&
+								selectedOption
+									? currentBtnClass.backgroundDanger
+									: ""
+							} ${isFiftyFiftyClicked ? clickedHalfOption : ""}`}
+							onClick={() => handleSelectOption(option)}
+						>
+							{answerTypes[index]}
+							{processedAnswer}
+						</button>
+					);
+				})}
+			</div>
+		</>
 	);
 };
 

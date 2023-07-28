@@ -10,6 +10,8 @@ import { showScore } from "../redux/slices/scoreSlice";
 import { rewardsList } from "../constants/rewards";
 import { playGameSound } from "../helpers/soundsCommands";
 import {
+	setIsAskTheAudienceClicked,
+	setIsAskTheAudienceUsed,
 	setIsCallAFrendClicked,
 	setIsCallAFrendUsed,
 	setIsFiftyFiftyClicked,
@@ -33,6 +35,8 @@ const RewardScale = () => {
 		dispatch(setIsFiftyFiftyUsed(false));
 		dispatch(setIsCallAFrendClicked(false));
 		dispatch(setIsCallAFrendUsed(false));
+		dispatch(setIsAskTheAudienceClicked(false));
+		dispatch(setIsAskTheAudienceUsed(false));
 		isVolumeActive && playGameSound();
 	};
 
