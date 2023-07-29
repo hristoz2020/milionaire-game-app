@@ -35,10 +35,10 @@ const JokersContainer = () => {
 			}, 1400);
 		}
 		if (joker === "askTheAudience") {
-			if(isAskTheAudienceClicked) {
+			if (isAskTheAudienceClicked) {
 				return;
 			}
-			dispatch(setIsAskTheAudienceClicked(!isAskTheAudienceClicked))
+			dispatch(setIsAskTheAudienceClicked(!isAskTheAudienceClicked));
 		}
 		if (joker === "phoneAFrend") {
 			if (isCallAFrendUsed) {
