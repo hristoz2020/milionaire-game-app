@@ -57,7 +57,7 @@ const ScaleModal: React.FC<ScaleModalOptions> = ({ options }) => {
 
 	return (
 		<div
-			className={`modal fade ${
+			className={`modal fade opacity ${
 				isAskTheAudienceClicked ? "show d-block" : "d-none"
 			}`}
 			id="scaleModal"

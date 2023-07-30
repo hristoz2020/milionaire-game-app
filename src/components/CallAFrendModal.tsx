@@ -20,7 +20,7 @@ const CallAFrendModal = () => {
 
 	return (
 		<div
-			className={`modal fade ${
+			className={`modal fade opacity ${
 				isCallAFrendClicked ? "show d-block" : "d-none"
 			} `}
 			id="callFrendModal"
@@ -41,7 +41,7 @@ const CallAFrendModal = () => {
 						Your friend says: “Are you sure you read the question
 						correctly? Because if you did, you’d know the correct
 						answer is obviously{" "}
-						<span className="border rounded-4  p-1">
+						<span className="fw-bolder">
 							{questions[currentQuestionIndex]?.correct_answer}
 						</span>
 						."
