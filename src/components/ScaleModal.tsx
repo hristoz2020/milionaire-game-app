@@ -6,6 +6,7 @@ import {
 } from "../redux/slices/jokersSlice";
 import { BarChart, Bar, XAxis, ResponsiveContainer } from "recharts";
 import { answerTypes } from "../constants/selectedOptions";
+import { generateFourNumbers } from "../helpers/scaleOperations";
 
 type ScaleModalOptions = {
 	options: string[];
@@ -23,16 +24,7 @@ const ScaleModal: React.FC<ScaleModalOptions> = ({ options }) => {
 		(option) => option === questions[currentQuestionIndex]?.correct_answer
 	);
 
-	const generateThreeNumbersWithSum40 = () => {
-		const num1 = Math.floor(Math.random() * 100) + 10;
-		const num2 = Math.floor(Math.random() * 100) + 10;
-		const num3 = Math.floor(Math.random() * 100) + 10;
-		const num4 = 400 - (num1 + num2 + num3);
-
-		return [num1, num2, num3, num4];
-	};
-
-	const threeNumbers = useMemo(() => generateThreeNumbersWithSum40(), []);
+	const threeNumbers = useMemo(() => generateFourNumbers(), []);
 
 	const uvOptions = (option: string) => {
 		let uvValue;
