@@ -5,7 +5,12 @@ import {
 	setIsFiftyFiftyClicked,
 	setIsFiftyFiftyUsed,
 } from "../redux/slices/jokersSlice";
-import { playFiftyFiftySound } from "../helpers/soundsCommands";
+import {
+	playAskTheAudienceSound,
+	playFiftyFiftySound,
+	playGameSound,
+	stopGameSound,
+} from "../helpers/soundsCommands";
 import { jokersList } from "../constants/jokerOptions";
 import CallAFrendModal from "./CallAFrendModal";
 
@@ -38,7 +43,12 @@ const JokersContainer = () => {
 			if (isAskTheAudienceClicked) {
 				return;
 			}
-			dispatch(setIsAskTheAudienceClicked(!isAskTheAudienceClicked));
+			isVolumeActive && stopGameSound();
+			isVolumeActive && playAskTheAudienceSound();
+			setTimeout(() => {
+				dispatch(setIsAskTheAudienceClicked(!isAskTheAudienceClicked));
+				isVolumeActive && playGameSound();
+			}, 3000);
 		}
 		if (joker === "phoneAFrend") {
 			if (isCallAFrendUsed) {
