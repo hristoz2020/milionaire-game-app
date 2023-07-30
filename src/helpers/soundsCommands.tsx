@@ -3,12 +3,14 @@ import wrongAnswer from "../assets/sounds/wrong_answer.mp3";
 import correctAnswer from "../assets/sounds/correct_answer.mp3";
 import fiftyFifty from "../assets/sounds/fifty_fifty.mp3";
 import askTheAudience from "../assets/sounds/ask_the_audience.mp3";
+import callAFriend from "../assets/sounds/call_a_friend.mp3";
 
 const gameSound = new Audio(start);
 const wrongAnswerSound = new Audio(wrongAnswer);
 const correctAnswerSound = new Audio(correctAnswer);
 const fiftyFiftySound = new Audio(fiftyFifty);
 const askTheAudienceSound = new Audio(askTheAudience);
+const callAFriendeSound = new Audio(callAFriend);
 
 export const playGameSound = () => {
 	void gameSound.play();
@@ -43,4 +45,8 @@ export const playFiftyFiftySound = () => {
 
 export const playAskTheAudienceSound = () => {
 	void askTheAudienceSound.play();
+};
+
+export const playCallAFriendSound = () => {
+	void callAFriendeSound.play();
 };

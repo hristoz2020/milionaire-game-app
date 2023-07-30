@@ -38,9 +38,8 @@ const CallAFrendModal = () => {
 						</h1>
 					</div>
 					<div className="modal-body text-center">
-						Your friend says: “Are you sure you read the question
-						correctly? Because if you did, you’d know the correct
-						answer is obviously{" "}
+						Your friend says, “Are you sure you read the question
+						correctly? Because I think the right answer is{"- "}
 						<span className="fw-bolder">
 							{questions[currentQuestionIndex]?.correct_answer}
 						</span>

@@ -7,6 +7,7 @@ import {
 } from "../redux/slices/jokersSlice";
 import {
 	playAskTheAudienceSound,
+	playCallAFriendSound,
 	playFiftyFiftySound,
 	playGameSound,
 	stopGameSound,
@@ -54,9 +55,12 @@ const JokersContainer = () => {
 			if (isCallAFrendUsed) {
 				return;
 			}
+			isVolumeActive && stopGameSound();
+			isVolumeActive && playCallAFriendSound();
 			setTimeout(() => {
 				dispatch(setIsCallAFrendClicked(!isCallAFrendClicked));
-			}, 1000);
+				isVolumeActive && playGameSound();
+			}, 3000);
 		}
 	};
 
