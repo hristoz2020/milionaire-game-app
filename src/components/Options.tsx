@@ -17,7 +17,7 @@ import {
 } from "../helpers/soundsCommands";
 import { processedText } from "../helpers/processedText";
 import { answerTypes } from "../constants/selectedOptions";
-import ScaleModal from "./ScaleModal";
+import AskTheAudienceModal from "./AskTheAudienceModal";
 
 const Options: FC = () => {
 	const dispatch = useAppDispatch();
@@ -112,7 +112,7 @@ const Options: FC = () => {
 
 	return (
 		<>
-			<ScaleModal options={options} />
+			<AskTheAudienceModal options={options} />
 			<div className="d-flex flex-wrap">
 				{options.map((option, index) => {
 					const checkOptions = selectedOption === option;

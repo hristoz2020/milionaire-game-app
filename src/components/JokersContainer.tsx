@@ -45,6 +45,7 @@ const JokersContainer = () => {
 			if (isAskTheAudienceClicked) {
 				return;
 			}
+			!isShouldTimerStopped && dispatch(setIsShouldTimerStopped(!isShouldTimerStopped));
 			isVolumeActive && stopGameSound();
 			isVolumeActive && playAskTheAudienceSound();
 			setTimeout(() => {

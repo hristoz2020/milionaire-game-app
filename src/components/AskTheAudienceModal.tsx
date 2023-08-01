@@ -7,16 +7,18 @@ import {
 import { BarChart, Bar, XAxis, ResponsiveContainer } from "recharts";
 import { answerTypes } from "../constants/selectedOptions";
 import { generateFourNumbers } from "../helpers/scaleOperations";
+import { setIsShouldTimerStopped } from "../redux/slices/questionsSlice";
 
-type ScaleModalOptions = {
+type AskTheAudienceModalOptions = {
 	options: string[];
 };
 
-const ScaleModal: React.FC<ScaleModalOptions> = ({ options }) => {
+const AskTheAudienceModal: React.FC<AskTheAudienceModalOptions> = ({
+	options,
+}) => {
 	const dispatch = useAppDispatch();
-	const { questions, currentQuestionIndex } = useAppSelector(
-		(state: RootState) => state.questions
-	);
+	const { questions, currentQuestionIndex, isShouldTimerStopped } =
+		useAppSelector((state: RootState) => state.questions);
 	const { isAskTheAudienceClicked, isAskTheAudienceUsed } = useAppSelector(
 		(state: RootState) => state.jokers
 	);
@@ -45,6 +47,7 @@ const ScaleModal: React.FC<ScaleModalOptions> = ({ options }) => {
 	const closeModal = () => {
 		dispatch(setIsAskTheAudienceClicked(!isAskTheAudienceClicked));
 		dispatch(setIsAskTheAudienceUsed(!isAskTheAudienceUsed));
+		dispatch(setIsShouldTimerStopped(!isShouldTimerStopped));
 	};
 
 	return (
@@ -88,4 +91,4 @@ const ScaleModal: React.FC<ScaleModalOptions> = ({ options }) => {
 	);
 };
 
-export default ScaleModal;
+export default AskTheAudienceModal;
