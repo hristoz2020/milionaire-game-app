@@ -14,10 +14,11 @@ import {
 } from "../helpers/soundsCommands";
 import { jokersList } from "../constants/jokerOptions";
 import CallAFrendModal from "./CallAFrendModal";
+import { setIsShouldTimerStopped } from "../redux/slices/questionsSlice";
 
 const JokersContainer = () => {
 	const dispatch = useAppDispatch();
-	const { isVolumeActive } = useAppSelector(
+	const { isVolumeActive, isShouldTimerStopped } = useAppSelector(
 		(state: RootState) => state.questions
 	);
 	const {
@@ -55,12 +56,13 @@ const JokersContainer = () => {
 			if (isCallAFrendUsed) {
 				return;
 			}
+			!isShouldTimerStopped && dispatch(setIsShouldTimerStopped(!isShouldTimerStopped));
 			isVolumeActive && stopGameSound();
 			isVolumeActive && playCallAFriendSound();
 			setTimeout(() => {
 				dispatch(setIsCallAFrendClicked(!isCallAFrendClicked));
 				isVolumeActive && playGameSound();
-			}, 3000);
+			}, 4000);
 		}
 	};
 

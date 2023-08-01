@@ -2,6 +2,7 @@ import {
 	setIsCallAFrendClicked,
 	setIsCallAFrendUsed,
 } from "../redux/slices/jokersSlice";
+import { setIsShouldTimerStopped } from "../redux/slices/questionsSlice";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 
 const CallAFrendModal = () => {
@@ -9,13 +10,14 @@ const CallAFrendModal = () => {
 	const { isCallAFrendClicked, isCallAFrendUsed } = useAppSelector(
 		(state: RootState) => state.jokers
 	);
-	const { questions, currentQuestionIndex } = useAppSelector(
+	const { questions, currentQuestionIndex, isShouldTimerStopped } = useAppSelector(
 		(state: RootState) => state.questions
 	);
 
 	const closeModal = () => {
 		dispatch(setIsCallAFrendClicked(!isCallAFrendClicked));
 		dispatch(setIsCallAFrendUsed(!isCallAFrendUsed));
+		dispatch(setIsShouldTimerStopped(!isShouldTimerStopped));
 	};
 
 	return (
