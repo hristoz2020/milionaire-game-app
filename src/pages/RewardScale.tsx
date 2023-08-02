@@ -16,7 +16,7 @@ import {
 	setIsFiftyFiftyClicked,
 	setIsFiftyFiftyUsed,
 } from "../redux/slices/jokersSlice";
-import ResultScaleContainer from "../components/resultScaleContainer";
+import ResultScaleContainer from "../components/ResultScaleContainer";
 
 const RewardScale = () => {
 	const dispatch = useAppDispatch();
