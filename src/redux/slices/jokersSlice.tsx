@@ -19,7 +19,7 @@ const initialState: HelpersState = {
 };
 
 const jokersSlice = createSlice({
-	name: "helpers",
+	name: "jokers",
 	initialState,
 	reducers: {
 		setIsFiftyFiftyClicked: (state, action: PayloadAction<boolean>) => {
