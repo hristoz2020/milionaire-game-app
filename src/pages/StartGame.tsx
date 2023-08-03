@@ -11,13 +11,13 @@ import { setIsFiftyFiftyClicked } from "../redux/slices/jokersSlice";
 import QuestionConainer from "../components/QuestionConainer";
 import Loader from "../components/Loader";
 import Timer from "../components/Timer";
+import JokersContainer from "../components/JokersContainer";
 import image from "../assets/images/image.webp";
 import {
 	playGameSound,
 	stopCorrectAnswerSound,
 	stopGameSound,
 } from "../helpers/soundsCommands";
-import JokersContainer from "../components/JokersContainer";
 
 const StartGame: FC = () => {
 	const dispatch = useAppDispatch();

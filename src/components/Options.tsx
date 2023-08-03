@@ -9,6 +9,7 @@ import {
 	setIsShouldTimerStopped,
 	setSelectedOption,
 } from "../redux/slices/questionsSlice";
+import AskTheAudienceModal from "./AskTheAudienceModal";
 import {
 	playCorrectAnswerSound,
 	playWrongAnswerSound,
@@ -17,7 +18,6 @@ import {
 } from "../helpers/soundsCommands";
 import { processedText } from "../helpers/processedText";
 import { answerTypes } from "../constants/selectedOptions";
-import AskTheAudienceModal from "./AskTheAudienceModal";
 
 const Options: FC = () => {
 	const dispatch = useAppDispatch();

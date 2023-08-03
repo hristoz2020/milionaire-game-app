@@ -1,12 +1,7 @@
 import React, { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import image from "../assets/images/image.webp";
-import {
-	categoriesTypes,
-	difficultiesTypes,
-} from "../constants/selectedOptions";
-import { stopGameSound } from "../helpers/soundsCommands";
 import { resetPoints } from "../redux/slices/pointsSlice";
+import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import {
 	getQuestions,
 	resetCurrentQuestionIndex,
@@ -15,7 +10,12 @@ import {
 	setQuestionsDifficulty,
 	setSelectedOption,
 } from "../redux/slices/questionsSlice";
-import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
+import {
+	categoriesTypes,
+	difficultiesTypes,
+} from "../constants/selectedOptions";
+import { stopGameSound } from "../helpers/soundsCommands";
+import image from "../assets/images/image.webp";
 
 const Home: FC = () => {
 	const dispatch = useAppDispatch();

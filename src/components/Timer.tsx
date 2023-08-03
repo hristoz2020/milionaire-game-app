@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { playWrongAnswerSound, stopGameSound } from "../helpers/soundsCommands";
 import { setIsDisabledAnswersBtns } from "../redux/slices/questionsSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
+import { playWrongAnswerSound, stopGameSound } from "../helpers/soundsCommands";
 
 const Timer = () => {
 	const navigate = useNavigate();

@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
+import { setIsShouldTimerStopped } from "../redux/slices/questionsSlice";
 import {
 	setIsAskTheAudienceClicked,
 	setIsAskTheAudienceUsed,
@@ -7,7 +8,6 @@ import {
 import { BarChart, Bar, XAxis, ResponsiveContainer } from "recharts";
 import { answerTypes } from "../constants/selectedOptions";
 import { generateFourNumbers } from "../helpers/scaleOperations";
-import { setIsShouldTimerStopped } from "../redux/slices/questionsSlice";
 
 type AskTheAudienceModalOptions = {
 	options: string[];

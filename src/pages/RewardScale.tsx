@@ -7,7 +7,6 @@ import {
 	setSelectedOption,
 } from "../redux/slices/questionsSlice";
 import { showScore } from "../redux/slices/scoreSlice";
-import { playGameSound } from "../helpers/soundsCommands";
 import {
 	setIsAskTheAudienceClicked,
 	setIsAskTheAudienceUsed,
@@ -17,6 +16,7 @@ import {
 	setIsFiftyFiftyUsed,
 } from "../redux/slices/jokersSlice";
 import ResultScaleContainer from "../components/ResultScaleContainer";
+import { playGameSound } from "../helpers/soundsCommands";
 
 const RewardScale = () => {
 	const dispatch = useAppDispatch();

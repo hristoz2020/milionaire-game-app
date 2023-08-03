@@ -1,5 +1,5 @@
-import { rewardsList } from "../constants/rewards";
 import { RootState, useAppSelector } from "../redux/store";
+import { rewardsList } from "../constants/rewards";
 
 const ResultScaleContainer = () => {
 	const points = useAppSelector((state: RootState) => state.points.points);

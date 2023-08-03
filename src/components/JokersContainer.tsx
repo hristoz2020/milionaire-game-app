@@ -5,6 +5,9 @@ import {
 	setIsFiftyFiftyClicked,
 	setIsFiftyFiftyUsed,
 } from "../redux/slices/jokersSlice";
+import { setIsShouldTimerStopped } from "../redux/slices/questionsSlice";
+import CallAFrendModal from "./CallAFrendModal";
+import { jokersList } from "../constants/jokerOptions";
 import {
 	playAskTheAudienceSound,
 	playCallAFriendSound,
@@ -12,9 +15,6 @@ import {
 	playGameSound,
 	stopGameSound,
 } from "../helpers/soundsCommands";
-import { jokersList } from "../constants/jokerOptions";
-import CallAFrendModal from "./CallAFrendModal";
-import { setIsShouldTimerStopped } from "../redux/slices/questionsSlice";
 
 const JokersContainer = () => {
 	const dispatch = useAppDispatch();
