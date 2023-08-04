@@ -28,7 +28,7 @@ Check out the live demo of the game at [Millionaire Game Demo](https://hristoz20
 
 1. Clone the repository to your local machine.
 2. Navigate to the project folder and run `npm install` to install the required dependencies.
-3. Start the development server with `npm run dev`.
+3. Start the development server with `npm start`.
 
 ## [Trivia API](https://opentdb.com/api_config.php)
 
