@@ -1,8 +1,8 @@
-# Why wants to be a Millionaire
+# Who wants to be a Millionaire
 
 ## Description
 
-Why wants to be a Millionaire is a web-based quiz game built using React and TypeScript.
+Who wants to be a Millionaire is a web-based quiz game built using React and TypeScript.
 It utilizes Redux Toolkit and Redux-Persist for managing the state and persisting data, while React Router handles navigation within the application.
 The user interface is designed to be clean and responsive, achieved through the use of Bootstrap for styling.
 It also utilizes Vite as the development server and build tool for faster development and optimized builds.
