@@ -42,10 +42,11 @@ const JokersContainer = () => {
 			}, 1400);
 		}
 		if (joker === "askTheAudience") {
-			if (isAskTheAudienceClicked) {
+			if (isAskTheAudienceUsed) {
 				return;
 			}
-			!isShouldTimerStopped && dispatch(setIsShouldTimerStopped(!isShouldTimerStopped));
+			!isShouldTimerStopped &&
+				dispatch(setIsShouldTimerStopped(!isShouldTimerStopped));
 			isVolumeActive && stopGameSound();
 			isVolumeActive && playAskTheAudienceSound();
 			setTimeout(() => {
@@ -57,7 +58,8 @@ const JokersContainer = () => {
 			if (isCallAFrendUsed) {
 				return;
 			}
-			!isShouldTimerStopped && dispatch(setIsShouldTimerStopped(!isShouldTimerStopped));
+			!isShouldTimerStopped &&
+				dispatch(setIsShouldTimerStopped(!isShouldTimerStopped));
 			isVolumeActive && stopGameSound();
 			isVolumeActive && playCallAFriendSound();
 			setTimeout(() => {
